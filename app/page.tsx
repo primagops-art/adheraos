@@ -21,7 +21,16 @@ function readLanding() {
   return {
     style,
     body,
-    inlineScript: `(function()${inlineScript}`,
+    inlineScript: `
+function runAdheraLegacy() {
+  if (!window.THREE) {
+    window.setTimeout(runAdheraLegacy, 50);
+    return;
+  }
+  (function()${inlineScript}
+}
+runAdheraLegacy();
+`,
   };
 }
 
