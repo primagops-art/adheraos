@@ -124,28 +124,63 @@ nav.nav-hidden {
 .sh { font-size:clamp(38px,4.5vw,62px);font-weight:300;letter-spacing:-0.035em;color:#0a0e1a;line-height:1.08;margin-bottom:16px;text-align:center; }
 .sh strong { font-weight:500; }
 .sp { font-size:18px;font-weight:300;color:#0a0e1a;line-height:1.78;max-width:560px;margin-bottom:64px;text-align:center;margin-left:auto;margin-right:auto; }
-.steps-wrapper {
-  background:#000000;
-  border-radius:24px;
-  padding:96px 56px;
-  box-shadow:0 8px 40px rgba(0,0,0,0.18);
-  overflow:hidden;
-  will-change:transform, opacity;
-}
-
 .feats-wrapper {
   background:#000000;
   border-radius:24px;
   padding:48px 40px;
   box-shadow:0 8px 40px rgba(0,0,0,0.18);
 }
-.steps { display:grid;grid-template-columns:repeat(4,1fr);gap:14px; }
-.step { background:#ffffff;border:1px solid rgba(255,255,255,0.9);border-radius:18px;padding:64px 36px;transition:all .4s cubic-bezier(.16,1,.3,1);cursor:pointer; }
-.step:hover { transform:translateY(-6px) scale(1.02);box-shadow:0 20px 50px rgba(0,0,0,0.35);border-color:rgba(255,255,255,0.6); }
-.step-n { font-size:52px;font-weight:200;letter-spacing:-0.04em;color:rgba(0,0,0,0.08);line-height:1;margin-bottom:24px; }
-.step-line { width:22px;height:1.5px;background:#000000;opacity:.2;margin-bottom:10px; }
-.step-title { font-size:16px;font-weight:500;color:#000000;margin-bottom:10px; }
-.step-desc { font-size:13px;font-weight:300;color:#444444;line-height:1.75; }
+.process-section { max-width:1280px;margin:0 auto;padding:92px 40px 96px;position:relative;z-index:2;overflow:hidden; }
+.process-section::before,.process-section::after { content:'';position:absolute;top:42%;width:420px;height:300px;background:repeating-linear-gradient(105deg,rgba(92,153,255,.16) 0 1px,transparent 1px 10px),repeating-linear-gradient(15deg,rgba(144,94,255,.12) 0 1px,transparent 1px 11px);opacity:.32;filter:blur(.2px);mask-image:radial-gradient(ellipse at center,#000 0%,transparent 70%);-webkit-mask-image:radial-gradient(ellipse at center,#000 0%,transparent 70%);pointer-events:none;z-index:-1; }
+.process-section::before { left:-310px;transform:rotate(9deg); }
+.process-section::after { right:-310px;transform:scaleX(-1) rotate(9deg); }
+.process-badge { width:max-content;margin:0 auto 12px;font-size:10px;font-weight:600;letter-spacing:0;text-transform:uppercase;color:#6f4cff;background:rgba(118,86,255,.1);border:1px solid rgba(118,86,255,.13);border-radius:999px;padding:5px 13px;box-shadow:0 10px 30px rgba(120,72,200,.08); }
+.process-title { font-size:56px;font-weight:500;letter-spacing:0;line-height:.98;text-align:center;color:#0a0e1a;margin-bottom:12px; }
+.process-title span { color:#7d52ff; }
+.process-sub { font-size:15px;font-weight:300;color:rgba(10,14,26,.58);line-height:1.6;text-align:center;margin:0 auto 34px;max-width:620px; }
+.process-grid { position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px; }
+.process-grid::before { content:'';position:absolute;left:10%;right:10%;top:47%;height:2px;background:linear-gradient(90deg,transparent,rgba(117,82,255,.16),rgba(117,82,255,.48),rgba(117,82,255,.16),transparent);box-shadow:0 0 24px rgba(117,82,255,.26);z-index:0; }
+.process-card { position:relative;z-index:1;min-height:456px;border-radius:22px;overflow:hidden;background:rgba(255,255,255,.86);border:1px solid rgba(198,205,232,.55);box-shadow:0 18px 52px rgba(42,52,96,.1),0 1px 0 rgba(255,255,255,.9) inset;transition:transform .38s cubic-bezier(.16,1,.3,1),box-shadow .38s cubic-bezier(.16,1,.3,1); }
+.process-card:hover { transform:translateY(-8px);box-shadow:0 26px 80px rgba(42,52,96,.16),0 1px 0 rgba(255,255,255,.95) inset; }
+.process-copy { position:relative;z-index:2;padding:26px 26px 0;min-height:196px; }
+.process-number { font-size:36px;font-weight:600;line-height:1;color:#7857ff;letter-spacing:0;margin-bottom:10px; }
+.process-line { width:18px;height:2px;border-radius:99px;background:#7857ff;margin-bottom:16px; }
+.process-name { font-size:18px;font-weight:600;letter-spacing:0;color:#0a0e1a;margin-bottom:9px; }
+.process-text { font-size:13px;font-weight:300;line-height:1.65;color:rgba(10,14,26,.62);max-width:210px; }
+.process-media { position:absolute;left:0;right:0;bottom:0;height:58%;overflow:hidden; }
+.process-media img { width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.02);transition:transform .55s cubic-bezier(.16,1,.3,1); }
+.process-card:hover .process-media img { transform:scale(1.07); }
+.process-media::before { content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.98) 0%,rgba(255,255,255,.34) 27%,rgba(45,60,135,.1) 52%,rgba(17,23,44,.36) 100%);z-index:1;pointer-events:none; }
+.process-media::after { content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 46%,rgba(124,86,255,.34),transparent 20%),linear-gradient(135deg,transparent 0%,rgba(255,255,255,.16) 38%,transparent 70%);mix-blend-mode:screen;z-index:2;pointer-events:none; }
+.process-node { position:absolute;left:50%;top:47%;width:14px;height:14px;border-radius:50%;background:#fff;border:3px solid #8a66ff;box-shadow:0 0 0 6px rgba(130,88,255,.12),0 0 24px rgba(130,88,255,.68);transform:translate(-50%,-50%);z-index:3; }
+.process-chip { position:absolute;z-index:4;padding:9px 11px;border-radius:12px;background:rgba(255,255,255,.66);border:1px solid rgba(255,255,255,.72);backdrop-filter:blur(14px);box-shadow:0 12px 28px rgba(20,26,60,.12);font-size:9px;font-weight:600;letter-spacing:0;text-transform:uppercase;color:rgba(83,65,180,.68); }
+.process-chip strong { display:block;font-size:13px;letter-spacing:0;text-transform:none;color:#7b58ff;margin-top:2px; }
+.process-chip.one { left:22px;bottom:142px; }
+.process-chip.two { right:18px;bottom:64px; }
+.process-chip.three { left:34px;bottom:42px; }
+.process-chip.four { right:20px;bottom:30px; }
+.process-mini-icon { position:absolute;left:50%;bottom:28px;z-index:4;width:46px;height:46px;border-radius:14px;background:rgba(104,79,255,.58);border:1px solid rgba(255,255,255,.45);backdrop-filter:blur(14px);box-shadow:0 18px 34px rgba(69,47,184,.24);display:grid;place-items:center;color:#fff;transform:translateX(-50%); }
+.process-mini-icon svg { width:21px;height:21px;stroke-width:1.9; }
+@media (max-width: 1180px) {
+  .process-section { padding:82px 32px 88px; }
+  .process-title { font-size:46px; }
+  .process-grid { grid-template-columns:repeat(2,minmax(0,1fr));max-width:760px;margin:0 auto; }
+  .process-grid::before { display:none; }
+  .process-card { min-height:440px; }
+}
+@media (max-width: 640px) {
+  .process-section { padding:68px 20px 78px; }
+  .process-section::before,.process-section::after { opacity:.18; }
+  .process-title { font-size:34px;line-height:1.05; }
+  .process-sub { font-size:14px;margin-bottom:26px; }
+  .process-grid { grid-template-columns:1fr;gap:14px; }
+  .process-card { min-height:420px;border-radius:20px; }
+  .process-copy { padding:23px 22px 0;min-height:178px; }
+  .process-number { font-size:32px; }
+  .process-node { top:46%; }
+  .process-chip { padding:8px 10px;font-size:8px; }
+  .process-chip strong { font-size:12px; }
+}
 .feats { display:grid;grid-template-columns:repeat(3,1fr);gap:10px; }
 .feat { background:#000000;border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:52px 36px;backdrop-filter:none;box-shadow:0 4px 24px rgba(0,0,0,0.18);transition:all .4s cubic-bezier(.16,1,.3,1);position:relative;overflow:hidden;cursor:pointer; }
 .feat::after { content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(80,120,220,0.3),transparent);opacity:0;transition:opacity .3s; }
@@ -378,17 +413,70 @@ footer { position:relative;z-index:2;padding:28px 40px;border-top:1px solid rgba
   </div>
 </section>
 
-<section class="sec" id="como">
-  <div class="ew r">Como funciona</div>
-  <h2 class="sh r d1">Do diagnóstico à<br><strong>ligação permanente</strong></h2>
-  <p class="sp r d2">Processo em 4 etapas para que a IA se torne inseparável do seu negócio.</p>
-  <div class="steps-wrapper">
-  <div class="steps">
-    <div class="step"><div class="step-n">01</div><div class="step-line"></div><div class="step-title">Diagnóstico</div><div class="step-desc">Mapeamos processos e oportunidades em 48h, gratuito e sem compromisso.</div></div>
-    <div class="step"><div class="step-n">02</div><div class="step-line"></div><div class="step-title">Arquitetura</div><div class="step-desc">Solução sob medida. Sem templates, tudo para a sua realidade.</div></div>
-    <div class="step"><div class="step-n">03</div><div class="step-line"></div><div class="step-title">Adesão</div><div class="step-desc">Entregamos em ciclos rápidos. Resultados visíveis no primeiro sprint.</div></div>
-    <div class="step"><div class="step-n">04</div><div class="step-line"></div><div class="step-title">Evolução</div><div class="step-desc">Monitoramos, evoluímos e expandimos. A IA cresce com o negócio.</div></div>
-  </div>
+<section class="process-section" id="como">
+  <div class="process-badge r">Processo</div>
+  <h2 class="process-title r d1">Transformação operacional<br>que gera <span>resultado.</span></h2>
+  <p class="process-sub r d2">Processo em 4 etapas para que a IA se torne inseparável do seu negócio.</p>
+  <div class="process-grid">
+    <article class="process-card r d1">
+      <div class="process-copy">
+        <div class="process-number">01</div>
+        <div class="process-line"></div>
+        <h3 class="process-name">Diagnóstico</h3>
+        <p class="process-text">Mapeamos processos, gargalos e oportunidades em até 48h.</p>
+      </div>
+      <div class="process-node"></div>
+      <div class="process-chip one">Oportunidades<strong>+27</strong></div>
+      <div class="process-chip two">Eficiência<strong>62%</strong></div>
+      <div class="process-mini-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19V5"/><path d="M4 19h16"/><path d="M8 16v-4"/><path d="M12 16V8"/><path d="M16 16v-7"/></svg>
+      </div>
+      <div class="process-media"><img src="/process/diagnostico.jpeg" alt="Operação energética com painéis solares, turbinas e camadas de dados"></div>
+    </article>
+    <article class="process-card r d2">
+      <div class="process-copy">
+        <div class="process-number">02</div>
+        <div class="process-line"></div>
+        <h3 class="process-name">Arquitetura</h3>
+        <p class="process-text">Desenhamos a solução sob medida para a sua realidade.</p>
+      </div>
+      <div class="process-node"></div>
+      <div class="process-chip one">Mapeamento<strong>100%</strong></div>
+      <div class="process-chip four">Estrutura<strong>Validada</strong></div>
+      <div class="process-mini-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 18V6"/><path d="M4 6h7l2 3h7v9H4z"/><path d="M8 14h8"/></svg>
+      </div>
+      <div class="process-media"><img src="/process/arquitetura.jpeg" alt="Cidade corporativa conectada por fluxos digitais"></div>
+    </article>
+    <article class="process-card r d3">
+      <div class="process-copy">
+        <div class="process-number">03</div>
+        <div class="process-line"></div>
+        <h3 class="process-name">Implementação</h3>
+        <p class="process-text">Entregamos em ciclos rápidos com execução orientada a resultado.</p>
+      </div>
+      <div class="process-node"></div>
+      <div class="process-chip one">Execução<strong>Em andamento</strong></div>
+      <div class="process-chip three">Energia<strong>Ativa</strong></div>
+      <div class="process-mini-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"/></svg>
+      </div>
+      <div class="process-media"><img src="/process/implementacao.jpeg" alt="Infraestrutura energética com barragem, painéis solares e turbinas"></div>
+    </article>
+    <article class="process-card r d4">
+      <div class="process-copy">
+        <div class="process-number">04</div>
+        <div class="process-line"></div>
+        <h3 class="process-name">Evolução</h3>
+        <p class="process-text">Monitoramos, evoluímos e expandimos com IA e dados.</p>
+      </div>
+      <div class="process-node"></div>
+      <div class="process-chip four">Resultados<strong>Crescentes</strong></div>
+      <div class="process-mini-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h4l2-5 4 10 2-5h2"/><path d="M4 19h16"/></svg>
+      </div>
+      <div class="process-media"><img src="/process/evolucao.jpeg" alt="Cidade conectada com infraestrutura digital e dados em tempo real"></div>
+    </article>
   </div>
 </section>
 
@@ -701,19 +789,19 @@ footer { position:relative;z-index:2;padding:28px 40px;border-top:1px solid rgba
 const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('on')}),{threshold:.1});
 document.querySelectorAll('.r').forEach(el=>io.observe(el));
 
-// 3D tilt effect on step cards
+// 3D tilt effect on process cards
 (function(){
-  document.querySelectorAll('.step').forEach(card => {
+  document.querySelectorAll('.process-card').forEach(card => {
     card.addEventListener('mousemove', e => {
       const rect = card.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
       const cx = rect.width / 2;
       const cy = rect.height / 2;
-      const rotX = ((y - cy) / cy) * -8;
-      const rotY = ((x - cx) / cx) * 8;
-      card.style.transform = `translateY(-6px) scale(1.02) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
-      card.style.boxShadow = `${-rotY*2}px ${rotX*2+20}px 50px rgba(0,0,0,0.3)`;
+      const rotX = ((y - cy) / cy) * -5;
+      const rotY = ((x - cx) / cx) * 5;
+      card.style.transform = `translateY(-8px) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+      card.style.boxShadow = `${-rotY*2}px ${rotX*2+26}px 80px rgba(42,52,96,0.16)`;
     });
     card.addEventListener('mouseleave', () => {
       card.style.transform = '';
@@ -721,8 +809,7 @@ document.querySelectorAll('.r').forEach(el=>io.observe(el));
     });
   });
 
-  // Steps wrapper perspective
-  const wrapper = document.querySelector('.steps-wrapper');
+  const wrapper = document.querySelector('.process-grid');
   if(wrapper) wrapper.style.perspective = '1000px';
 })();
 
@@ -894,18 +981,17 @@ function submitForm(){ const btn=document.querySelector('#tp-contato .btn-form')
   setTimeout(type, delay);
 })();
 
-// Scroll-linked parallax — caixa preta sobe/desce com o scroll continuamente
+// Scroll-linked parallax for the process grid
 (function(){
-  const wrapper = document.querySelector('.steps-wrapper');
+  const wrapper = document.querySelector('.process-grid');
   if(!wrapper) return;
 
   function update() {
     const rect = wrapper.getBoundingClientRect();
     const vh = window.innerHeight;
-    // progress: 0 = caixa no fundo da tela, 1 = caixa totalmente visível
     const progress = Math.min(Math.max((vh - rect.top) / (vh * 0.6), 0), 1);
-    const translateY = (1 - progress) * 120;
-    const scale = 0.92 + progress * 0.08;
+    const translateY = (1 - progress) * 54;
+    const scale = 0.98 + progress * 0.02;
     const opacity = Math.min(progress * 1.5, 1);
     wrapper.style.transform = `translateY(${translateY}px) scale(${scale})`;
     wrapper.style.opacity = opacity;
