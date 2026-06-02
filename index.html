@@ -73,9 +73,9 @@ nav.nav-hidden {
 .hero-badge { display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:var(--text-3);background:rgba(255,255,255,0.75);border:1px solid rgba(100,120,200,0.18);border-radius:100px;padding:6px 16px;backdrop-filter:blur(10px);margin-bottom:40px;opacity:0;animation:fadeUp 1s cubic-bezier(.16,1,.3,1) .2s both; }
 .badge-dot { width:5px;height:5px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-2));animation:bdot 2.5s ease-in-out infinite; }
 @keyframes bdot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.7)} }
-.hero-carousel { width:min(860px,100%);height:clamp(230px,31vh,315px);position:relative;margin:0 auto 14px;perspective:1200px;opacity:0;animation:fadeUp 1s cubic-bezier(.16,1,.3,1) .16s both; }
+.hero-carousel { width:min(1080px,100%);height:clamp(240px,33vh,330px);position:relative;margin:0 auto 14px;perspective:1200px;opacity:0;animation:fadeUp 1s cubic-bezier(.16,1,.3,1) .16s both; }
 .hero-carousel-stage { position:absolute;inset:0;display:flex;align-items:center;justify-content:center;transform-style:preserve-3d; }
-.hero-card { position:absolute;width:min(650px,70vw);height:clamp(220px,29vh,292px);border-radius:24px;overflow:hidden;background:#fff;border:1px solid rgba(255,255,255,0.74);box-shadow:0 28px 78px rgba(10,14,26,0.2);transition:transform .58s cubic-bezier(.16,1,.3,1),opacity .58s cubic-bezier(.16,1,.3,1),filter .58s cubic-bezier(.16,1,.3,1),box-shadow .35s cubic-bezier(.16,1,.3,1);will-change:transform,opacity; }
+.hero-card { position:absolute;width:min(760px,76vw);height:clamp(230px,31vh,318px);border-radius:24px;overflow:hidden;background:#fff;border:1px solid rgba(255,255,255,0.74);box-shadow:0 28px 78px rgba(10,14,26,0.2);transition:transform .58s cubic-bezier(.16,1,.3,1),opacity .58s cubic-bezier(.16,1,.3,1),filter .58s cubic-bezier(.16,1,.3,1),box-shadow .35s cubic-bezier(.16,1,.3,1);will-change:transform,opacity; }
 .hero-card img { width:100%;height:100%;display:block;object-fit:cover; }
 .hero-card.is-active { opacity:1;z-index:4;transform:translate3d(0,0,90px) scale(1);filter:saturate(1.03) contrast(1.02); }
 .hero-card.is-active:hover { transform:translate3d(0,-4px,100px) scale(1.008);box-shadow:0 34px 100px rgba(10,14,26,0.22); }
@@ -89,7 +89,6 @@ nav.nav-hidden {
 .hero-dots { position:absolute;left:50%;bottom:2px;z-index:7;display:flex;gap:8px;transform:translateX(-50%); }
 .hero-dot { width:7px;height:7px;border:0;border-radius:50%;background:rgba(10,14,26,.18);cursor:pointer;padding:0;transition:width .25s ease,background .25s ease; }
 .hero-dot.is-active { width:22px;border-radius:999px;background:linear-gradient(135deg,#4060d0,#7848c8); }
-.hero-kicker { font-size:10px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#4c63d8;margin:0 0 8px;opacity:0;animation:fadeUp 1s cubic-bezier(.16,1,.3,1) .28s both; }
 .hero-h1 { font-size:clamp(38px,5.2vw,64px);font-weight:300;line-height:1.02;letter-spacing:-0.04em;color:var(--text);max-width:720px;margin-bottom:14px;opacity:0;animation:fadeUp 1s cubic-bezier(.16,1,.3,1) .35s both; }
 .hero-h1 .gw { font-weight:400;color:#0a0e1a;background:none;-webkit-background-clip:unset;-webkit-text-fill-color:#0a0e1a;background-clip:unset; }
 .hero-p { font-size:clamp(14px,1.35vw,16px);font-weight:300;color:#0a0e1a;max-width:500px;line-height:1.55;margin-bottom:22px;opacity:0;animation:fadeUp 1s cubic-bezier(.16,1,.3,1) .5s both; }
@@ -98,12 +97,10 @@ nav.nav-hidden {
 .btn-hero:hover { transform:translateY(-2px);box-shadow:0 14px 48px rgba(0,0,0,0.28);background:#1a1e2e;color:#fff; }
 .arrow { color:#fff;transition:transform .3s; }
 .btn-hero:hover .arrow { transform:translateX(4px); }
-.hero-note { font-size:11px;color:#0a0e1a;display:flex;align-items:center;gap:6px; }
-.hero-note-check { color:#0a0e1a;font-size:13px; }
 @media (max-width: 900px) {
   .hero { padding-top:76px; }
-  .hero-carousel { height:250px;margin-bottom:18px; }
-  .hero-card { width:74vw;height:224px;border-radius:22px; }
+  .hero-carousel { height:258px;margin-bottom:18px; }
+  .hero-card { width:82vw;height:232px;border-radius:22px; }
   .hero-card.is-prev { transform:translate3d(-42%,10px,-90px) rotateY(10deg) scale(.78); }
   .hero-card.is-next { transform:translate3d(42%,10px,-90px) rotateY(-10deg) scale(.78); }
   .hero-arrow { width:38px;height:38px;font-size:20px; }
@@ -120,7 +117,6 @@ nav.nav-hidden {
   .hero-arrow.next { right:18px;transform:none; }
   .hero-arrow:hover { transform:scale(1.04); }
   .hero-dots { bottom:0; }
-  .hero-kicker { font-size:9px;margin-bottom:8px; }
   .hero-h1 { font-size:38px;max-width:340px; }
   .hero-p { max-width:320px;margin-bottom:20px; }
 }
@@ -409,14 +405,12 @@ footer { position:relative;z-index:2;padding:28px 40px;border-top:1px solid rgba
     <button class="hero-arrow next" type="button" aria-label="Próxima imagem" data-carousel-next>&rsaquo;</button>
     <div class="hero-dots" id="heroCarouselDots" aria-label="Páginas do carrossel"></div>
   </div>
-  <div class="hero-kicker">Plataforma completa</div>
   <h1 class="hero-h1" id="heroTitle"></h1>
   <p class="hero-p">A plataforma completa para transformar processos, automatizar tarefas e impulsionar resultados.</p>
   <div class="hero-ctas">
     <button class="btn-hero" onclick="document.getElementById('portal').scrollIntoView({behavior:'smooth'})">
       Começar gratuitamente <span class="arrow">→</span>
     </button>
-    <div class="hero-note"><span class="hero-note-check">✓</span>Não é necessário cartão de crédito</div>
   </div>
 </section>
 
