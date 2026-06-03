@@ -147,28 +147,37 @@ nav.nav-hidden {
 .process-title span { color:var(--process-accent);font-weight:600; }
 .process-sub { font-family:var(--font-text);font-size:16px;font-weight:400;letter-spacing:-0.01em;color:rgba(10,14,26,.72);line-height:1.7;text-align:center;margin:0 auto 44px;max-width:620px; }
 .process-grid { position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px; }
-.process-grid::before { content:'';position:absolute;left:10%;right:10%;top:47%;height:2px;background:linear-gradient(90deg,transparent,rgba(10,14,26,.08),rgba(10,14,26,.28),rgba(10,14,26,.08),transparent);box-shadow:0 0 20px rgba(10,14,26,.08);z-index:0; }
-.process-card { position:relative;z-index:1;min-height:468px;border-radius:22px;overflow:hidden;clip-path:inset(0 round 22px);-webkit-clip-path:inset(0 round 22px);background:rgba(255,255,255,.86);border:1px solid rgba(198,205,232,.55);box-shadow:0 18px 52px rgba(42,52,96,.1),0 1px 0 rgba(255,255,255,.9) inset;transition:transform .38s cubic-bezier(.16,1,.3,1),box-shadow .38s cubic-bezier(.16,1,.3,1);backface-visibility:hidden;transform:translateZ(0);will-change:transform,box-shadow;contain:paint;isolation:isolate; }
-.process-card:hover { transform:translate3d(0,-8px,0);box-shadow:0 26px 80px rgba(42,52,96,.16),0 1px 0 rgba(255,255,255,.95) inset; }
-.process-copy { position:relative;z-index:2;padding:26px 26px 0;min-height:196px; }
-.process-number { font-family:var(--font-display);font-size:36px;font-weight:500;line-height:1;color:var(--process-accent);letter-spacing:-0.03em;margin-bottom:10px; }
-.process-line { width:18px;height:2px;border-radius:99px;background:var(--process-accent);margin-bottom:16px; }
-.process-name { font-family:var(--font-display);font-size:18px;font-weight:500;letter-spacing:-0.03em;color:#0a0e1a;margin-bottom:9px; }
-.process-text { font-family:var(--font-text);font-size:13px;font-weight:400;letter-spacing:-0.01em;line-height:1.65;color:rgba(10,14,26,.62);max-width:210px; }
-.process-media { position:absolute;left:0;right:0;bottom:0;height:61%;overflow:hidden;border-radius:inherit;transform:translateZ(0);backface-visibility:hidden; }
-.process-media img { width:100%;height:100%;object-fit:cover;object-position:center;display:block;transform:scale(1.015) translateZ(0);transition:transform .55s cubic-bezier(.16,1,.3,1);backface-visibility:hidden;image-rendering:auto; }
-.process-card:hover .process-media img { transform:scale(1.07); }
-.process-media::before { content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.98) 0%,rgba(255,255,255,.34) 27%,rgba(45,60,135,.1) 52%,rgba(17,23,44,.36) 100%);z-index:1;pointer-events:none; }
-.process-media::after { content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 46%,rgba(10,14,26,.16),transparent 20%),linear-gradient(135deg,transparent 0%,rgba(255,255,255,.16) 38%,transparent 70%);mix-blend-mode:screen;z-index:2;pointer-events:none; }
-.process-node { position:absolute;left:50%;top:47%;width:14px;height:14px;border-radius:50%;background:#fff;border:3px solid var(--process-accent);box-shadow:0 0 0 6px rgba(10,14,26,.08),0 0 20px rgba(10,14,26,.22);transform:translate(-50%,-50%);z-index:3; }
-.process-chip { position:absolute;z-index:4;padding:9px 11px;border-radius:12px;background:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.78);backdrop-filter:blur(14px);box-shadow:0 12px 28px rgba(20,26,60,.12);font-size:9px;font-weight:600;letter-spacing:0;text-transform:uppercase;color:rgba(10,14,26,.55); }
-.process-chip strong { display:block;font-size:13px;letter-spacing:0;text-transform:none;color:var(--process-accent);margin-top:2px; }
-.process-chip.one { left:22px;bottom:142px; }
-.process-chip.two { right:18px;bottom:64px; }
-.process-chip.three { left:34px;bottom:42px; }
-.process-chip.four { right:20px;bottom:30px; }
-.process-mini-icon { position:absolute;left:50%;bottom:28px;z-index:4;width:46px;height:46px;border-radius:14px;background:rgba(10,14,26,.78);border:1px solid rgba(255,255,255,.45);backdrop-filter:blur(14px);box-shadow:0 18px 34px rgba(10,14,26,.18);display:grid;place-items:center;color:#fff;transform:translateX(-50%); }
-.process-mini-icon svg { width:21px;height:21px;stroke-width:1.9; }
+.process-grid::before { display:none; }
+.process-card { position:relative;z-index:1;min-height:468px;border-radius:22px;overflow:hidden;clip-path:inset(0 round 22px);-webkit-clip-path:inset(0 round 22px);background:#030407;border:1px solid rgba(255,255,255,.1);box-shadow:0 22px 70px rgba(4,7,16,.16),0 1px 0 rgba(255,255,255,.12) inset;transition:transform .38s cubic-bezier(.16,1,.3,1),box-shadow .38s cubic-bezier(.16,1,.3,1);backface-visibility:hidden;transform:translateZ(0);will-change:transform,box-shadow;contain:paint;isolation:isolate; }
+.process-card:hover { transform:translate3d(0,-8px,0);box-shadow:0 30px 90px rgba(4,7,16,.26),0 1px 0 rgba(255,255,255,.16) inset; }
+.process-copy { position:relative;z-index:3;padding:26px 26px 0;min-height:190px; }
+.process-number { font-family:var(--font-display);font-size:36px;font-weight:500;line-height:1;color:#fff;letter-spacing:-0.03em;margin-bottom:10px;text-shadow:0 12px 28px rgba(0,0,0,.35); }
+.process-line { width:18px;height:2px;border-radius:99px;background:linear-gradient(90deg,#8b5cff,#24d7ff,#ff9a2a);margin-bottom:16px; }
+.process-name { font-family:var(--font-display);font-size:18px;font-weight:500;letter-spacing:-0.03em;color:#fff;margin-bottom:9px;text-shadow:0 12px 28px rgba(0,0,0,.35); }
+.process-text { font-family:var(--font-text);font-size:13px;font-weight:400;letter-spacing:-0.01em;line-height:1.65;color:rgba(255,255,255,.76);max-width:218px;text-shadow:0 10px 24px rgba(0,0,0,.35); }
+.process-media { position:absolute;inset:0;overflow:hidden;border-radius:inherit;transform:translateZ(0);backface-visibility:hidden; }
+.process-media img { width:100%;height:100%;object-fit:cover;object-position:center;display:block;transform:scale(1.02) translateZ(0);transition:transform .55s cubic-bezier(.16,1,.3,1),filter .55s cubic-bezier(.16,1,.3,1);backface-visibility:hidden;image-rendering:auto;filter:saturate(1.06) contrast(1.04); }
+.process-card:hover .process-media img { transform:scale(1.07) translateZ(0);filter:saturate(1.14) contrast(1.08); }
+.process-media::before { content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.78) 0%,rgba(0,0,0,.62) 30%,rgba(0,0,0,.22) 57%,rgba(0,0,0,.68) 100%);z-index:1;pointer-events:none; }
+.process-media::after { content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 18%,rgba(255,255,255,.08),transparent 30%),linear-gradient(135deg,rgba(255,255,255,.08),transparent 36%,rgba(0,0,0,.18) 100%);mix-blend-mode:screen;z-index:2;pointer-events:none; }
+.process-node { display:none; }
+.process-chip { position:absolute;z-index:4;min-width:92px;padding:9px 12px;border-radius:12px;background:rgba(255,255,255,.88);border:1px solid rgba(255,255,255,.82);backdrop-filter:blur(14px);box-shadow:0 16px 34px rgba(0,0,0,.24);font-family:var(--font-display);font-size:8px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:rgba(10,14,26,.58); }
+.process-chip strong { display:block;font-size:13px;line-height:1.05;letter-spacing:-0.02em;text-transform:none;color:#0a0e1a;margin-top:4px; }
+.process-mini-icon { position:absolute;z-index:4;width:46px;height:46px;border-radius:14px;background:rgba(8,10,16,.82);border:1px solid rgba(255,255,255,.24);backdrop-filter:blur(16px);box-shadow:0 18px 34px rgba(0,0,0,.32),0 1px 0 rgba(255,255,255,.18) inset;display:grid;place-items:center;color:#fff; }
+.process-mini-icon svg { width:20px;height:20px;stroke-width:1.85;display:block; }
+.process-mini-icon svg * { vector-effect:non-scaling-stroke;stroke-linecap:round;stroke-linejoin:round; }
+.process-diagnostico .process-chip.one { left:24px;bottom:126px; }
+.process-diagnostico .process-chip.two { right:24px;bottom:56px; }
+.process-diagnostico .process-mini-icon { left:50%;bottom:30px;transform:translateX(-50%); }
+.process-arquitetura .process-chip.one { left:28px;bottom:126px; }
+.process-arquitetura .process-chip.four { right:22px;bottom:44px; }
+.process-arquitetura .process-mini-icon { left:50%;bottom:44px;transform:translateX(-50%); }
+.process-implementacao .process-chip.one { left:28px;bottom:138px; }
+.process-implementacao .process-chip.three { left:28px;bottom:34px; }
+.process-implementacao .process-mini-icon { left:50%;bottom:38px;transform:translateX(-50%); }
+.process-evolucao .process-chip.three { left:22px;bottom:118px; }
+.process-evolucao .process-chip.four { right:22px;bottom:42px; }
+.process-evolucao .process-mini-icon { left:42%;bottom:38px;transform:translateX(-50%); }
 .process-diagnostico .process-media img { object-position:center 50%; }
 .process-arquitetura .process-media img { object-position:center 50%; }
 .process-implementacao .process-media img { object-position:center 50%; }
@@ -179,7 +188,7 @@ nav.nav-hidden {
   .process-grid { grid-template-columns:repeat(2,minmax(0,1fr));max-width:760px;margin:0 auto; }
   .process-grid::before { display:none; }
   .process-card { min-height:452px; }
-  .process-media { height:60%; }
+  .process-media { height:auto; }
 }
 @media (max-width: 640px) {
   .process-section { width:100%;max-width:100%;padding:70px 18px 76px;overflow:hidden; }
@@ -193,7 +202,7 @@ nav.nav-hidden {
   .process-node { top:46%; }
   .process-chip { padding:8px 10px;font-size:8px; }
   .process-chip strong { font-size:12px; }
-  .process-media { height:59%; }
+  .process-media { height:auto; }
   .process-evolucao .process-media img { object-position:center 58%; }
 }
 .services-section { max-width:1280px;padding:84px 40px 92px; }
@@ -857,8 +866,8 @@ footer { position:relative;z-index:2;padding:28px 40px;border-top:1px solid rgba
         <p class="process-text">Entregamos em ciclos rápidos com execução orientada a resultado.</p>
       </div>
       <div class="process-node"></div>
-      <div class="process-chip one">Execução<strong>Em andamento</strong></div>
-      <div class="process-chip three">Energia<strong>Ativa</strong></div>
+      <div class="process-chip one">Entrega<strong>Em ciclos</strong></div>
+      <div class="process-chip three">Validação<strong>Ativa</strong></div>
       <div class="process-mini-icon" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"/></svg>
       </div>
@@ -872,6 +881,7 @@ footer { position:relative;z-index:2;padding:28px 40px;border-top:1px solid rgba
         <p class="process-text">Monitoramos, evoluímos e expandimos com IA e dados.</p>
       </div>
       <div class="process-node"></div>
+      <div class="process-chip three">Aprendizado<strong>Contínuo</strong></div>
       <div class="process-chip four">Resultados<strong>Crescentes</strong></div>
       <div class="process-mini-icon" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h4l2-5 4 10 2-5h2"/><path d="M4 19h16"/></svg>
