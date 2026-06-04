@@ -156,10 +156,10 @@ nav.nav-hidden {
 .process-name { font-family:var(--font-display);font-size:18px;font-weight:500;letter-spacing:-0.03em;color:#fff;margin-bottom:9px;text-shadow:0 12px 28px rgba(0,0,0,.35); }
 .process-text { font-family:var(--font-text);font-size:13px;font-weight:400;letter-spacing:-0.01em;line-height:1.65;color:rgba(255,255,255,.76);max-width:218px;text-shadow:0 10px 24px rgba(0,0,0,.35); }
 .process-media { position:absolute;inset:0;overflow:hidden;border-radius:inherit;transform:translateZ(0);backface-visibility:hidden; }
-.process-media img { width:100%;height:100%;object-fit:cover;object-position:center;display:block;transform:scale(1.02) translateZ(0);transition:transform .55s cubic-bezier(.16,1,.3,1),filter .55s cubic-bezier(.16,1,.3,1);backface-visibility:hidden;image-rendering:auto;filter:saturate(1.06) contrast(1.04); }
-.process-card:hover .process-media img { transform:scale(1.07) translateZ(0);filter:saturate(1.14) contrast(1.08); }
-.process-media::before { content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.78) 0%,rgba(0,0,0,.62) 30%,rgba(0,0,0,.22) 57%,rgba(0,0,0,.68) 100%);z-index:1;pointer-events:none; }
-.process-media::after { content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 18%,rgba(255,255,255,.08),transparent 30%),linear-gradient(135deg,rgba(255,255,255,.08),transparent 36%,rgba(0,0,0,.18) 100%);mix-blend-mode:screen;z-index:2;pointer-events:none; }
+.process-media img { width:100%;height:100%;object-fit:cover;object-position:center;display:block;transform:scale(1.02) translateZ(0);transition:transform .55s cubic-bezier(.16,1,.3,1);backface-visibility:hidden;image-rendering:auto; }
+.process-card:hover .process-media img { transform:scale(1.05) translateZ(0); }
+.process-media::before,
+.process-media::after { display:none; }
 .process-node { display:none; }
 .process-chip { position:absolute;z-index:4;min-width:92px;padding:9px 12px;border-radius:12px;background:rgba(255,255,255,.88);border:1px solid rgba(255,255,255,.82);backdrop-filter:blur(14px);box-shadow:0 16px 34px rgba(0,0,0,.24);font-family:var(--font-display);font-size:8px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:rgba(10,14,26,.58); }
 .process-chip strong { display:block;font-size:13px;line-height:1.05;letter-spacing:-0.02em;text-transform:none;color:#0a0e1a;margin-top:4px; }
@@ -210,12 +210,12 @@ nav.nav-hidden {
 .services-section .sh { max-width:900px;margin:0 auto 24px;font-size:64px;line-height:1;letter-spacing:-0.04em;text-wrap:balance; }
 .services-section .sp { max-width:650px;margin:0 auto 50px;color:rgba(10,14,26,.76);font-family:var(--font-text);font-size:18px;font-weight:400;letter-spacing:-0.01em;line-height:1.7; }
 .feats { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px; }
-.feat { min-height:286px;border-radius:18px;padding:0;position:relative;overflow:hidden;clip-path:inset(0 round 18px);background:#0a0e1a;border:0;box-shadow:0 18px 50px rgba(10,14,26,.12);transition:transform .4s cubic-bezier(.16,1,.3,1),box-shadow .4s cubic-bezier(.16,1,.3,1);isolation:isolate;backface-visibility:hidden; }
-.feat::before { content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(4,7,14,.02) 0%,rgba(4,7,14,.12) 40%,rgba(4,7,14,.78) 100%);z-index:1;pointer-events:none; }
-.feat::after { content:'';position:absolute;inset:0;background:radial-gradient(circle at 20% 10%,rgba(255,255,255,.18),transparent 32%),linear-gradient(135deg,rgba(255,255,255,.08),transparent 42%);opacity:.45;mix-blend-mode:screen;z-index:2;pointer-events:none; }
+.feat { min-height:286px;border-radius:18px;padding:0;position:relative;overflow:hidden;clip-path:inset(0 round 18px);background:#030407;border:0;box-shadow:0 18px 50px rgba(10,14,26,.12);transition:transform .4s cubic-bezier(.16,1,.3,1),box-shadow .4s cubic-bezier(.16,1,.3,1);isolation:isolate;backface-visibility:hidden; }
+.feat::before { content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(4,7,14,0) 0%,rgba(4,7,14,.04) 48%,rgba(4,7,14,.78) 100%);z-index:1;pointer-events:none; }
+.feat::after { display:none; }
 .feat:hover { transform:translateY(-6px);box-shadow:0 26px 72px rgba(10,14,26,.18); }
-.feat img { position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block;transform:scale(1.015) translateZ(0);transition:transform .6s cubic-bezier(.16,1,.3,1),filter .6s cubic-bezier(.16,1,.3,1);filter:saturate(.96) contrast(1.04);backface-visibility:hidden; }
-.feat:hover img { transform:scale(1.07) translateZ(0);filter:saturate(1.04) contrast(1.06); }
+.feat img { position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block;transform:scale(1.005) translateZ(0);transition:transform .6s cubic-bezier(.16,1,.3,1);backface-visibility:hidden; }
+.feat:hover img { transform:scale(1.04) translateZ(0); }
 .feat-content { position:absolute;left:0;right:0;bottom:0;z-index:3;padding:0 28px 28px;color:#fff; }
 .feat-name { font-family:var(--font-display);font-size:25px;font-weight:500;color:#ffffff;margin:0 0 12px;letter-spacing:-0.035em;line-height:1.08;max-width:280px; }
 .feat-desc { font-family:var(--font-text);font-size:15px;font-weight:400;letter-spacing:-0.01em;color:rgba(255,255,255,.88);line-height:1.55;max-width:360px;margin:0; }
@@ -841,7 +841,7 @@ footer { position:relative;z-index:2;padding:28px 40px;border-top:1px solid rgba
       <div class="process-mini-icon" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19V5"/><path d="M4 19h16"/><path d="M8 16v-4"/><path d="M12 16V8"/><path d="M16 16v-7"/></svg>
       </div>
-      <div class="process-media"><img src="/process/diagnostico-antigravity.png" alt="Diagnostico operacional com inteligencia visual abstrata" loading="lazy" decoding="async"></div>
+      <div class="process-media"><img src="/process/diagnostico-card-final.png" alt="Diagnostico operacional com inteligencia visual abstrata" loading="lazy" decoding="async"></div>
     </article>
     <article class="process-card process-arquitetura r d2">
       <div class="process-copy">
@@ -856,7 +856,7 @@ footer { position:relative;z-index:2;padding:28px 40px;border-top:1px solid rgba
       <div class="process-mini-icon" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 18V6"/><path d="M4 6h7l2 3h7v9H4z"/><path d="M8 14h8"/></svg>
       </div>
-      <div class="process-media"><img src="/process/arquitetura-antigravity.png" alt="Arquitetura de solucao com nucleo visual abstrato" loading="lazy" decoding="async"></div>
+      <div class="process-media"><img src="/process/arquitetura-card-final.png" alt="Arquitetura de solucao com nucleo visual abstrato" loading="lazy" decoding="async"></div>
     </article>
     <article class="process-card process-implementacao r d3">
       <div class="process-copy">
@@ -871,7 +871,7 @@ footer { position:relative;z-index:2;padding:28px 40px;border-top:1px solid rgba
       <div class="process-mini-icon" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"/></svg>
       </div>
-      <div class="process-media"><img src="/process/implementacao-antigravity.png" alt="Implementacao de inteligencia operacional em movimento" loading="lazy" decoding="async"></div>
+      <div class="process-media"><img src="/process/implementacao-card-final.png" alt="Implementacao de inteligencia operacional em movimento" loading="lazy" decoding="async"></div>
     </article>
     <article class="process-card process-evolucao r d4">
       <div class="process-copy">
@@ -886,7 +886,7 @@ footer { position:relative;z-index:2;padding:28px 40px;border-top:1px solid rgba
       <div class="process-mini-icon" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h4l2-5 4 10 2-5h2"/><path d="M4 19h16"/></svg>
       </div>
-      <div class="process-media"><img src="/process/evolucao-antigravity.png" alt="Evolucao continua com energia tecnologica abstrata" loading="lazy" decoding="async"></div>
+      <div class="process-media"><img src="/process/evolucao-card-final.png" alt="Evolucao continua com energia tecnologica abstrata" loading="lazy" decoding="async"></div>
     </article>
   </div>
 </section>
@@ -897,42 +897,42 @@ footer { position:relative;z-index:2;padding:28px 40px;border-top:1px solid rgba
   <p class="sp r d2">Soluções completas para conectar, automatizar e impulsionar o que realmente importa: resultados.</p>
   <div class="feats">
     <article class="feat feat-process r d1">
-      <img src="/services/automacao-processos.png" alt="Robôs industriais automatizando processos em ambiente produtivo" loading="lazy" decoding="async">
+      <img src="/services/automacao-processos-card.png" alt="Robôs industriais automatizando processos em ambiente produtivo" loading="lazy" decoding="async">
       <div class="feat-content">
         <h3 class="feat-name">Automação<br>de Processos</h3>
         <p class="feat-desc">Agentes de IA que eliminam trabalho repetitivo e aprendem com cada interação.</p>
       </div>
     </article>
     <article class="feat feat-integration r d2">
-      <img src="/services/integracao-universal.png" alt="Integração universal conectando ERPs, CRM, banco de dados e e-commerce" loading="lazy" decoding="async">
+      <img src="/services/integracao-universal-card.png" alt="Integração universal conectando ERPs, CRM, banco de dados e e-commerce" loading="lazy" decoding="async">
       <div class="feat-content">
         <h3 class="feat-name">Integração<br>Universal</h3>
         <p class="feat-desc">Conectamos qualquer sistema, ERP ou plataforma em um ecossistema unificado.</p>
       </div>
     </article>
     <article class="feat feat-data r d3">
-      <img src="/services/inteligencia-dados.png" alt="Data center moderno para inteligência de dados" loading="lazy" decoding="async">
+      <img src="/services/inteligencia-dados-card.png" alt="Data center moderno para inteligência de dados" loading="lazy" decoding="async">
       <div class="feat-content">
         <h3 class="feat-name">Inteligência<br>de Dados</h3>
         <p class="feat-desc">Dashboards vivos e previsões que transformam dados em decisões precisas.</p>
       </div>
     </article>
     <article class="feat feat-agents r d4">
-      <img src="/services/agentes-atendimento.png" alt="Mão humana sendo tocada por assistente digital de IA" loading="lazy" decoding="async">
+      <img src="/services/agentes-atendimento-card.png" alt="Mão humana sendo tocada por assistente digital de IA" loading="lazy" decoding="async">
       <div class="feat-content">
         <h3 class="feat-name">Agentes de<br>Atendimento</h3>
         <p class="feat-desc">IA que representa sua marca via WhatsApp, Instagram e voz com naturalidade e precisão.</p>
       </div>
     </article>
     <article class="feat feat-omni r d5">
-      <img src="/services/omnichannel.png" alt="Biotecnologia e inteligência de máquina em ambiente físico-digital" loading="lazy" decoding="async">
+      <img src="/services/omnichannel-card.png" alt="Biotecnologia e inteligência de máquina em ambiente físico-digital" loading="lazy" decoding="async">
       <div class="feat-content">
         <h3 class="feat-name">Omnichannel</h3>
         <p class="feat-desc">Físico e digital operando como um organismo único, sem fricção.</p>
       </div>
     </article>
     <article class="feat feat-evolution r d6">
-      <img src="/services/evolucao-continua.jpeg" alt="Olhar digital representando evolução contínua com inteligência" loading="lazy" decoding="async">
+      <img src="/services/evolucao-continua-card.png" alt="Olhar digital representando evolução contínua com inteligência" loading="lazy" decoding="async">
       <div class="feat-content">
         <h3 class="feat-name">Evolução<br>Contínua</h3>
         <p class="feat-desc">Quanto mais usa, mais inteligente e aderente ao negócio fica.</p>
@@ -1487,3 +1487,4 @@ function submitForm(){ const btn=document.querySelector('#tp-contato .btn-form')
 </script>
 </body>
 </html>
+
