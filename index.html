@@ -445,9 +445,18 @@ footer { position:relative;z-index:2;padding:28px 40px;border-top:1px solid rgba
 .blog-card:nth-child(5) { transition-delay:.57s; }
 .blog-card:hover { transform:translateY(-8px) !important; box-shadow:0 20px 50px rgba(0,0,0,0.2); }
 .blog-card-img {
-  width:100%;height:200px;
+  width:100%;
+  aspect-ratio:4/5;
   display:flex;align-items:center;justify-content:center;
   position:relative;overflow:hidden;
+  background:#050507;
+}
+.blog-card-img img {
+  width:100%;height:100%;
+  display:block;
+  object-fit:contain;
+  object-position:center;
+  background:#050507;
 }
 .blog-card-img-bg {
   width:100%;height:100%;
@@ -992,7 +1001,9 @@ footer { position:relative;z-index:2;padding:28px 40px;border-top:1px solid rgba
 
     <div class="blog-card">
       
-      <div class="blog-card-img" style="background:linear-gradient(135deg,#0a0a0a,#1a1a2e);height:200px;"></div>
+      <div class="blog-card-img">
+        <img src="/cases/01-adhera-speaker-seated.png" alt="Palestrante da Adhera em evento" loading="lazy" decoding="async">
+      </div>
       <div class="blog-card-body">
         <div class="blog-card-tag">Automação · Case</div>
         <div class="blog-card-title">Como reduzimos 80% do tempo de atendimento de uma clínica</div>
@@ -1002,7 +1013,9 @@ footer { position:relative;z-index:2;padding:28px 40px;border-top:1px solid rgba
 
     <div class="blog-card">
       
-      <div class="blog-card-img" style="background:linear-gradient(135deg,#0d1117,#0f2027);height:200px;"></div>
+      <div class="blog-card-img">
+        <img src="/cases/02-interconnected-keynote.png" alt="Palco Adhera Interconnected Solutions" loading="lazy" decoding="async">
+      </div>
       <div class="blog-card-body">
         <div class="blog-card-tag">Integração · Case</div>
         <div class="blog-card-title">ERP + CRM + IA: o ecossistema que triplicou as vendas</div>
@@ -1012,7 +1025,9 @@ footer { position:relative;z-index:2;padding:28px 40px;border-top:1px solid rgba
 
     <div class="blog-card">
       
-      <div class="blog-card-img" style="background:linear-gradient(135deg,#0a0a0a,#1a0a2e);height:200px;"></div>
+      <div class="blog-card-img">
+        <img src="/cases/03-economic-forum.png" alt="Executivo falando em fórum econômico" loading="lazy" decoding="async">
+      </div>
       <div class="blog-card-body">
         <div class="blog-card-tag">Dados · Insight</div>
         <div class="blog-card-title">Por que dashboards em tempo real mudam decisões estratégicas</div>
@@ -1022,7 +1037,9 @@ footer { position:relative;z-index:2;padding:28px 40px;border-top:1px solid rgba
 
     <div class="blog-card">
       
-      <div class="blog-card-img" style="background:linear-gradient(135deg,#0a1a0a,#0f1f0f);height:200px;"></div>
+      <div class="blog-card-img">
+        <img src="/cases/04-adhera-stage-talk.png" alt="Apresentação no palco Adhera" loading="lazy" decoding="async">
+      </div>
       <div class="blog-card-body">
         <div class="blog-card-tag">Atendimento · Case</div>
         <div class="blog-card-title">Agente de voz que fechou R$2M em contratos no primeiro mês</div>
@@ -1032,7 +1049,9 @@ footer { position:relative;z-index:2;padding:28px 40px;border-top:1px solid rgba
 
     <div class="blog-card">
       
-      <div class="blog-card-img" style="background:linear-gradient(135deg,#0a0a1a,#1a0f0f);height:200px;"></div>
+      <div class="blog-card-img">
+        <img src="/cases/05-adhera-studio-interview.png" alt="Entrevista em estúdio Adhera" loading="lazy" decoding="async">
+      </div>
       <div class="blog-card-body">
         <div class="blog-card-tag">Omnichannel · Insight</div>
         <div class="blog-card-title">O futuro do varejo: físico e digital como um único organismo</div>
@@ -1302,11 +1321,9 @@ function submitForm(){ const btn=document.querySelector('#tp-contato .btn-form')
 (function(){
   const assetBase = window.location.protocol === 'file:' ? './public' : '';
   const carouselImages = [
-    { src: `${assetBase}/hero-carousel/adhera-interconnected.png`, alt: 'Fachada Adhera com assinatura Interconnected Solutions' },
-    { src: `${assetBase}/hero-carousel/intelligent-infrastructure.png`, alt: 'Infraestrutura inteligente com monitoramento integrado' },
-    { src: `${assetBase}/hero-carousel/governance-policy.png`, alt: 'Cidade conectada com governanca e inteligencia de dados' },
-    { src: `${assetBase}/hero-carousel/wind-clean-future.png`, alt: 'Energia limpa com turbina eolica e interface de sustentabilidade' },
-    { src: `${assetBase}/hero-carousel/reliable-infrastructure.png`, alt: 'Infraestrutura moderna com fluxo continuo de agua' },
+    { src: `${assetBase}/hero-carousel/adhera-keynote-interconnected.png`, alt: 'Keynote Adhera Interconnected Solutions' },
+    { src: `${assetBase}/hero-carousel/adhera-futuro-criatividade.png`, alt: 'Palco Adhera com futuro e criatividade' },
+    { src: `${assetBase}/hero-carousel/adhera-big-solutions-studio.png`, alt: 'Estudio Adhera Big Solutions' },
   ];
 
   const stage = document.getElementById('heroCarouselStage');
