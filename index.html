@@ -114,13 +114,13 @@ nav.nav-hidden {
 .btn-ghost:hover { border-color:rgba(255,255,255,0.5);color:#fff;background:rgba(255,255,255,0.08); }
 .btn-solid { font-size:13px;font-weight:500;color:#0a0e1a;background:#ffffff;border:none;padding:8px 20px;border-radius:100px;cursor:pointer;transition:all .25s;box-shadow:0 4px 18px rgba(0,0,0,0.22); }
 .btn-solid:hover { transform:translateY(-1px);box-shadow:0 8px 28px rgba(0,0,0,0.32);background:rgba(255,255,255,0.9); }
-.hero { min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:104px 32px 32px;text-align:center;position:relative; }
+.hero { min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:84px 32px 32px;text-align:center;position:relative; }
 .hero-badge { display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:var(--text-3);background:rgba(255,255,255,0.75);border:1px solid rgba(100,120,200,0.18);border-radius:100px;padding:6px 16px;backdrop-filter:blur(10px);margin-bottom:40px;opacity:0;animation:fadeUp 1s cubic-bezier(.16,1,.3,1) .2s both; }
 .badge-dot { width:5px;height:5px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-2));animation:bdot 2.5s ease-in-out infinite; }
 @keyframes bdot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.7)} }
-.hero-carousel { width:min(1380px,calc(100vw - 64px));height:clamp(560px,calc(100svh - 154px),760px);position:relative;margin:0 auto;perspective:1200px;opacity:0;animation:fadeUp 1s cubic-bezier(.16,1,.3,1) .16s both; }
+.hero-carousel { width:min(1340px,calc(100vw - 64px));height:clamp(500px,calc(100svh - 288px),640px);position:relative;margin:0 auto;perspective:1200px;opacity:0;animation:fadeUp 1s cubic-bezier(.16,1,.3,1) .16s both; }
 .hero-carousel-stage { position:absolute;inset:0;display:flex;align-items:center;justify-content:center;transform-style:preserve-3d; }
-.hero-card { position:absolute;width:min(1120px,78vw);height:clamp(520px,calc(100svh - 184px),680px);border-radius:30px;overflow:hidden;background:#fff;border:1px solid rgba(255,255,255,0.74);box-shadow:0 34px 110px rgba(10,14,26,0.22);transition:transform .58s cubic-bezier(.16,1,.3,1),opacity .58s cubic-bezier(.16,1,.3,1),box-shadow .35s cubic-bezier(.16,1,.3,1);will-change:transform,opacity;backface-visibility:hidden; }
+.hero-card { position:absolute;width:min(1080px,76vw);height:clamp(470px,calc(100svh - 330px),600px);border-radius:30px;overflow:hidden;background:#fff;border:1px solid rgba(255,255,255,0.74);box-shadow:0 34px 110px rgba(10,14,26,0.22);transition:transform .58s cubic-bezier(.16,1,.3,1),opacity .58s cubic-bezier(.16,1,.3,1),box-shadow .35s cubic-bezier(.16,1,.3,1);will-change:transform,opacity;backface-visibility:hidden; }
 .hero-card img { width:100%;height:100%;display:block;object-fit:cover;object-position:center;image-rendering:auto;transform:translateZ(0);backface-visibility:hidden; }
 .hero-card.is-active { opacity:1;z-index:4;transform:translate3d(0,0,90px) scale(1); }
 .hero-card.is-active:hover { transform:translate3d(0,-4px,100px) scale(1.008);box-shadow:0 34px 100px rgba(10,14,26,0.22); }
@@ -134,33 +134,37 @@ nav.nav-hidden {
 .hero-dots { position:absolute;left:50%;bottom:24px;z-index:8;display:flex;gap:8px;transform:translateX(-50%); }
 .hero-dot { width:7px;height:7px;border:0;border-radius:50%;background:rgba(10,14,26,.18);cursor:pointer;padding:0;transition:width .25s ease,background .25s ease; }
 .hero-dot.is-active { width:22px;border-radius:999px;background:linear-gradient(135deg,#4060d0,#7848c8); }
-.hero-overlay { position:absolute;inset:0;z-index:5;display:flex;align-items:center;justify-content:center;padding:40px 32px;pointer-events:none;transition:opacity .7s cubic-bezier(.16,1,.3,1),visibility .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1); }
-.hero-copy-panel { pointer-events:auto;width:min(940px,88%);padding:54px 70px 46px;border-radius:42px;background:radial-gradient(ellipse at center,rgba(255,255,255,.88) 0%,rgba(255,255,255,.74) 48%,rgba(255,255,255,.34) 72%,rgba(255,255,255,0) 100%);backdrop-filter:blur(16px) saturate(1.12); }
+.hero-overlay { position:absolute;inset:0;z-index:5;display:flex;align-items:center;justify-content:center;padding:32px 28px;pointer-events:none;transition:opacity .7s cubic-bezier(.16,1,.3,1),visibility .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1); }
+.hero-copy-panel { pointer-events:auto;width:min(820px,78%);padding:38px 52px 34px;border-radius:34px;background:radial-gradient(ellipse at center,rgba(255,255,255,.86) 0%,rgba(255,255,255,.72) 50%,rgba(255,255,255,.3) 76%,rgba(255,255,255,0) 100%);backdrop-filter:blur(15px) saturate(1.08); }
 .hero-carousel.is-copy-hidden .hero-overlay { opacity:0;visibility:hidden;pointer-events:none;transform:translateY(10px) scale(.98); }
-.hero-carousel:hover .hero-overlay,.hero-carousel:focus-within .hero-overlay { opacity:1;visibility:visible;transform:none; }
-.hero-h1 { font-family:var(--font-display);font-size:clamp(58px,7vw,104px);font-weight:400;line-height:.92;letter-spacing:-0.055em;color:var(--text);max-width:940px;margin:0 auto 24px;opacity:0;animation:fadeUp 1s cubic-bezier(.16,1,.3,1) .35s both; }
+.hero-h1 { font-family:var(--font-display);font-size:clamp(46px,5.5vw,78px);font-weight:400;line-height:.96;letter-spacing:-0.055em;color:var(--text);max-width:800px;margin:0 auto 18px;opacity:0;animation:fadeUp 1s cubic-bezier(.16,1,.3,1) .35s both; }
 .hero-h1 .gw { font-weight:600;color:#0a0e1a;background:none;-webkit-background-clip:unset;-webkit-text-fill-color:#0a0e1a;background-clip:unset; }
-.hero-p { font-family:var(--font-text);font-size:16px;font-weight:400;letter-spacing:-0.01em;color:#0a0e1a;max-width:590px;line-height:1.7;margin:0 auto 24px;opacity:0;animation:fadeUp 1s cubic-bezier(.16,1,.3,1) .5s both; }
+.hero-p { font-family:var(--font-text);font-size:15px;font-weight:400;letter-spacing:-0.01em;color:#0a0e1a;max-width:540px;line-height:1.65;margin:0 auto 20px;opacity:0;animation:fadeUp 1s cubic-bezier(.16,1,.3,1) .5s both; }
 .hero-ctas { display:flex;flex-direction:column;align-items:center;gap:9px;opacity:0;animation:fadeUp 1s cubic-bezier(.16,1,.3,1) .65s both; }
 .btn-hero { display:inline-flex;align-items:center;gap:10px;font-size:14px;font-weight:400;color:#fff;background:#000000;border:1px solid #000000;padding:12px 34px;border-radius:100px;cursor:pointer;backdrop-filter:none;transition:all .35s cubic-bezier(.16,1,.3,1);box-shadow:0 6px 32px rgba(0,0,0,0.18); }
 .btn-hero:hover { transform:translateY(-2px);box-shadow:0 14px 48px rgba(0,0,0,0.28);background:#1a1e2e;color:#fff; }
 .arrow { color:#fff;transition:transform .3s; }
 .btn-hero:hover .arrow { transform:translateX(4px); }
+.hero-aftercopy { display:flex;flex-direction:column;align-items:center;gap:16px;margin-top:16px;opacity:0;visibility:hidden;pointer-events:none;transform:translateY(18px);transition:opacity .75s cubic-bezier(.16,1,.3,1),visibility .75s cubic-bezier(.16,1,.3,1),transform .75s cubic-bezier(.16,1,.3,1); }
+.hero.is-compact-copy-visible .hero-aftercopy { opacity:1;visibility:visible;pointer-events:auto;transform:none; }
+.hero-after-title { font-family:var(--font-display);font-size:clamp(34px,4vw,56px);font-weight:400;line-height:.98;letter-spacing:-0.052em;color:#0a0e1a;margin:0;max-width:720px;text-align:center; }
+.hero-after-title strong { font-weight:600; }
+.hero-aftercopy .btn-hero { padding:11px 32px; }
 @media (max-width: 900px) {
-  .hero { padding-top:98px; }
-  .hero-carousel { width:min(100%,calc(100vw - 36px));height:clamp(520px,78svh,660px); }
-  .hero-card { width:min(88vw,720px);height:clamp(490px,72svh,620px);border-radius:24px; }
+  .hero { padding-top:86px; }
+  .hero-carousel { width:min(100%,calc(100vw - 36px));height:clamp(470px,70svh,620px); }
+  .hero-card { width:min(88vw,720px);height:clamp(440px,64svh,580px);border-radius:24px; }
   .hero-card.is-prev { transform:translate3d(-48%,12px,-90px) rotateY(10deg) scale(.58); }
   .hero-card.is-next { transform:translate3d(48%,12px,-90px) rotateY(-10deg) scale(.58); }
   .hero-arrow { width:38px;height:38px;font-size:20px; }
   .hero-arrow.prev { left:0; }
   .hero-arrow.next { right:0; }
-  .hero-copy-panel { width:min(680px,90%);padding:46px 38px 40px;border-radius:32px; }
+  .hero-copy-panel { width:min(620px,88%);padding:38px 34px 34px;border-radius:30px; }
 }
 @media (max-width: 560px) {
-  .hero { min-height:100svh;padding:90px 14px 28px; }
-  .hero-carousel { width:100%;height:clamp(560px,78svh,640px);margin-bottom:0; }
-  .hero-card { width:92vw;height:clamp(520px,72svh,600px);border-radius:22px; }
+  .hero { min-height:100svh;padding:82px 14px 28px; }
+  .hero-carousel { width:100%;height:clamp(500px,70svh,600px);margin-bottom:0; }
+  .hero-card { width:92vw;height:clamp(460px,64svh,560px);border-radius:22px; }
   .hero-card.is-prev,.hero-card.is-next { opacity:.26; }
   .hero-arrow { top:auto;bottom:-7px;width:34px;height:34px;font-size:18px; }
   .hero-arrow.prev { left:18px;transform:none; }
@@ -168,10 +172,12 @@ nav.nav-hidden {
   .hero-arrow:hover { transform:scale(1.04); }
   .hero-dots { bottom:18px; }
   .hero-overlay { padding:24px 10px; }
-  .hero-copy-panel { width:96%;padding:38px 20px 34px;border-radius:28px;background:radial-gradient(ellipse at center,rgba(255,255,255,.9) 0%,rgba(255,255,255,.78) 54%,rgba(255,255,255,.38) 78%,rgba(255,255,255,0) 100%); }
-  .hero-h1 { font-size:44px;line-height:.98;max-width:350px;text-wrap:balance; }
+  .hero-copy-panel { width:94%;padding:32px 18px 30px;border-radius:26px;background:radial-gradient(ellipse at center,rgba(255,255,255,.9) 0%,rgba(255,255,255,.78) 54%,rgba(255,255,255,.38) 78%,rgba(255,255,255,0) 100%); }
+  .hero-h1 { font-size:38px;line-height:1;max-width:330px;text-wrap:balance; }
   .hero-p { max-width:320px;margin-bottom:20px; }
   .hero-ctas { width:min(100%,320px); }
+  .hero-aftercopy { margin-top:14px;gap:14px; }
+  .hero-after-title { font-size:34px;max-width:340px; }
 }
 .sec { max-width:1100px;margin:0 auto;padding:80px 40px;position:relative;z-index:2; }
 .ew { font-family:var(--font-display);font-size:12px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:#0a0e1a;margin-bottom:24px;display:flex;align-items:center;gap:10px;justify-content:center; }
@@ -623,23 +629,23 @@ footer { position:relative;z-index:2;padding:28px 40px;border-top:1px solid rgba
 
   .hero {
     min-height:100svh;
-    padding:90px 14px 28px;
+    padding:82px 14px 28px;
   }
 
   .hero-carousel {
     width:100%;
-    height:clamp(560px,78svh,640px);
+    height:clamp(500px,70svh,600px);
   }
 
   .hero-card {
     width:92vw;
-    height:clamp(520px,72svh,600px);
+    height:clamp(460px,64svh,560px);
   }
 
   .hero-h1 {
-    font-size:42px;
-    line-height:.98;
-    max-width:350px;
+    font-size:38px;
+    line-height:1;
+    max-width:330px;
     text-wrap:balance;
   }
 
@@ -887,6 +893,12 @@ footer { position:relative;z-index:2;padding:28px 40px;border-top:1px solid rgba
     </div>
     <button class="hero-arrow next" type="button" aria-label="Próxima imagem" data-carousel-next>&rsaquo;</button>
     <div class="hero-dots" id="heroCarouselDots" aria-label="Páginas do carrossel"></div>
+  </div>
+  <div class="hero-aftercopy" id="heroAftercopy" aria-hidden="true">
+    <h2 class="hero-after-title">Conectamos ideias,<br>tecnologia e <strong>pessoas.</strong></h2>
+    <button class="btn-hero" onclick="document.getElementById('portal').scrollIntoView({behavior:'smooth'})">
+      Come&ccedil;ar gratuitamente <span class="arrow">&rarr;</span>
+    </button>
   </div>
 </section>
 
@@ -1426,7 +1438,9 @@ function submitForm(){ const btn=document.querySelector('#tp-contato .btn-form')
 // Typewriter effect for hero title
 (function(){
   const el = document.getElementById('heroTitle');
+  const hero = document.querySelector('.hero');
   const carousel = document.querySelector('.hero-carousel');
+  const aftercopy = document.getElementById('heroAftercopy');
   if(!el) return;
 
   // Segments: [text, isGradient, hasBreak]
@@ -1463,7 +1477,11 @@ function submitForm(){ const btn=document.querySelector('#tp-contato .btn-form')
     if(segIdx >= segments.length) {
       el.innerHTML = getHTML(builtSegs, null, '') ;
       if(carousel) {
-        window.setTimeout(() => carousel.classList.add('is-copy-hidden'), 4200);
+        window.setTimeout(() => {
+          carousel.classList.add('is-copy-hidden');
+          if(hero) hero.classList.add('is-compact-copy-visible');
+          if(aftercopy) aftercopy.setAttribute('aria-hidden', 'false');
+        }, 2500);
       }
       return;
     }
