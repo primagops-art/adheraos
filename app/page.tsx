@@ -1,6 +1,5 @@
 import fs from "node:fs";
 import path from "node:path";
-import Script from "next/script";
 
 function extract(source: string, start: RegExp, end: RegExp) {
   const startMatch = source.match(start);
@@ -23,10 +22,6 @@ function readLanding() {
     body,
     inlineScript: `
 function runAdheraLegacy() {
-  if (!window.THREE) {
-    window.setTimeout(runAdheraLegacy, 50);
-    return;
-  }
   (function()${inlineScript}
 }
 runAdheraLegacy();
@@ -91,9 +86,9 @@ export default function Home() {
     <>
       <style dangerouslySetInnerHTML={{ __html: landing.style }} />
       <div dangerouslySetInnerHTML={{ __html: landing.body }} />
-      <Script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" strategy="afterInteractive" />
-      <Script id="adhera-legacy" strategy="afterInteractive" dangerouslySetInnerHTML={{ __html: landing.inlineScript }} />
-      <Script id="adhera-lead-capture" strategy="afterInteractive" dangerouslySetInnerHTML={{ __html: leadCaptureOverride }} />
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" />
+      <script dangerouslySetInnerHTML={{ __html: landing.inlineScript }} />
+      <script dangerouslySetInnerHTML={{ __html: leadCaptureOverride }} />
     </>
   );
 }
