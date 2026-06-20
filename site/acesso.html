@@ -135,15 +135,19 @@
   </div>
 
 </div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
 <script>
 (function(){
-  var TEST={email:'cliente@adheraos.com',pass:'adhera2026'};
   window.tryLogin=function(e){
     e.preventDefault();
     var em=(document.getElementById('email').value||'').trim().toLowerCase();
     var pw=document.getElementById('pass').value||'';
-    if(em===TEST.email && pw===TEST.pass){ location.href='portal.html'; }
-    else { document.getElementById('err').style.display='block'; }
+    document.getElementById('err').style.display='none';
+    supabaseClient.auth.signInWithPassword({email:em,password:pw}).then(function(res){
+      if(res.error){ document.getElementById('err').style.display='block'; }
+      else { location.href='portal.html'; }
+    });
     return false;
   };
 })();

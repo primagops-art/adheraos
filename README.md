@@ -75,6 +75,10 @@ Para publicar qualquer atualização: edite os arquivos dentro de `site/`, comit
 
 `adheraos.com` e `www.adheraos.com` já estão configurados em *Settings → Domains* do projeto Vercel.
 
+### URLs limpas
+
+`site/vercel.json` tem `cleanUrls: true` — em produção, `/diagnostico` e `/portal` funcionam sem `.html` (e a versão com `.html` redireciona automaticamente). Os links internos dentro de `site/` continuam com `.html` de propósito, para o site continuar abrindo direto do disco (`file://`).
+
 ## Observação sobre o email
 
 `email-acesso.html` usa dois placeholders que seu sistema de envio (ESP) deve preencher: `{{FIRST_NAME}}` (nome do destinatário) e `{{MANAGE_URL}}` (link de preferências). O botão já aponta para `https://adheraos.com/acesso.html` — isso só vai responder de fato depois que o domínio estiver publicado.
