@@ -53,6 +53,15 @@ Cada página é um único arquivo `.html` autocontido (CSS e JS inline, sem etap
 
 ## Como republicar (Vercel)
 
+O projeto Vercel está conectado ao repositório GitHub (`primagops-art/adheraos`), com **Root Directory = `site`**. Deploy é automático:
+
+- Push em `main` → deploy de produção.
+- Push em outra branch / PR → deploy de preview (URL própria, não afeta produção).
+
+Para publicar qualquer atualização: edite os arquivos dentro de `site/`, comite e dê `git push`. Não precisa rodar nada manualmente.
+
+### Deploy manual via CLI (alternativa, raramente necessário)
+
 1. Instalar a CLI uma vez: `npm i -g vercel`
 2. Entrar na pasta `site/` — **é só essa pasta que vai pro ar**, não a `AdheraOS-Site/` toda:
    ```
@@ -61,9 +70,10 @@ Cada página é um único arquivo `.html` autocontido (CSS e JS inline, sem etap
 3. Login (essa etapa é com você): `vercel login`
 4. Deploy de teste: `vercel` → gera uma URL de preview para revisar antes de ir ao ar
 5. Deploy em produção: `vercel --prod`
-6. Domínio próprio: no dashboard da Vercel → seu projeto → *Settings → Domains* → adicionar `adheraos.com` → a Vercel mostra os registros DNS (A/CNAME) para cadastrar no painel do seu provedor de domínio.
 
-Para publicar qualquer atualização futura: edite os arquivos dentro de `site/` e repita o passo 5 (`vercel --prod`) de dentro dessa pasta.
+### Domínio
+
+`adheraos.com` e `www.adheraos.com` já estão configurados em *Settings → Domains* do projeto Vercel.
 
 ## Observação sobre o email
 
