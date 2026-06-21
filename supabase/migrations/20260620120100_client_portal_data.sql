@@ -21,6 +21,8 @@ for select
 to authenticated
 using (auth.uid() = user_id);
 
+grant select on public.client_profiles to authenticated;
+
 
 create table if not exists public.client_projects (
   id uuid primary key default gen_random_uuid(),
@@ -47,6 +49,8 @@ for select
 to authenticated
 using (auth.uid() = user_id);
 
+grant select on public.client_projects to authenticated;
+
 
 create table if not exists public.client_proposals (
   id uuid primary key default gen_random_uuid(),
@@ -67,3 +71,5 @@ on public.client_proposals
 for select
 to authenticated
 using (auth.uid() = user_id);
+
+grant select on public.client_proposals to authenticated;
