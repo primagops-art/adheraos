@@ -109,6 +109,8 @@
   <div id="root"></div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
 <script>
 const TOTAL = 6;
 const B = {
@@ -236,7 +238,22 @@ function render(){
   root.querySelectorAll('.txt').forEach(inp=>inp.addEventListener('input',e=>{B[e.target.dataset.f]=e.target.value;}));
 }
 function go(n){i=Math.max(0,Math.min(7,n));window.scrollTo({top:0,behavior:'smooth'});render();}
-function send(){document.getElementById('toast').style.display='block';}
+function send(){
+  const payload={
+    company:B.company, sector:B.sector, sector_other:B.sectorOther, size:B.size,
+    areas:B.areas, bottlenecks:B.bottlenecks,
+    erp:B.erp, erp_other:B.erpOther, crm:B.crm, crm_other:B.crmOther,
+    tools:B.tools, integration:B.integration,
+    centralization:B.centralization, indicators:B.indicators, cadence:B.cadence,
+    outcome:B.outcome, priority:B.priority, horizon:B.horizon,
+    budget:B.budget, timeline:B.timeline, notes:B.notes
+  };
+  supabaseClient.from('diagnostic_submissions').insert(payload).then(function(res){
+    const toast=document.getElementById('toast');
+    if(res.error){ toast.textContent='Could not send — please try again.'; }
+    toast.style.display='block';
+  });
+}
 render();
 </script>
 </body>
