@@ -243,7 +243,30 @@
   </main>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
 <script>
+let PROFILE = {company_name:'', contact_name:'', role_label:'', avatar_initials:''};
+let PROJECTS = [];
+let PROPOSALS = [];
+const STATUS_COLOR = {'In execution':'g','In progress':'c','Attention':'r','Waiting':'a'};
+function fmtDate(iso, withYear){
+  if(!iso) return '';
+  const d=new Date(iso+'T00:00:00');
+  const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return d.getDate()+' '+months[d.getMonth()]+(withYear?' '+d.getFullYear():'');
+}
+function focusPanel(){
+  const p = PROJECTS.find(x=>x.is_focus) || PROJECTS[0];
+  if(!p) return `<div class="panel"><div class="pt">Project in focus</div><div class="big">No active project</div></div>`;
+  return `<div class="panel">
+       <div class="pt">Project in focus ${tg(p.status)}</div>
+       <div class="big">${p.name}</div>
+       <div style="font-size:13px;color:var(--grey2);margin-top:8px">${p.subtitle||''}</div>
+       <div class="pbar" style="width:100%;margin-top:18px"><i class="${STATUS_COLOR[p.status]||'g'}" style="width:${p.progress||0}%"></i></div>
+       <div style="display:flex;justify-content:space-between;margin-top:10px;font-size:12px;color:var(--grey)"><span>${p.progress||0}% complete</span><span>Due ${fmtDate(p.deadline,true)}</span></div>
+     </div>`;
+}
 const sheadF=(n,t,ex)=>`<div class="shead"><span class="sn">${n}</span><span class="st">${t}</span>${ex?`<span class="ex">${ex}</span>`:''}</div>`;
 const cells=(arr)=>`<div class="cells c${arr.length}">`+arr.map(c=>`<div class="cell"><div class="v">${c.v}</div><div class="k">${c.k}</div>${c.d?`<div class="d ${c.dir||''}">${c.d}</div>`:''}</div>`).join('')+`</div>`;
 const phead=(t,p)=>`<div class="phead"><h1>${t}</h1>${p?`<p>${p}</p>`:''}</div>`;
@@ -284,13 +307,7 @@ const TABS=[
    </div>
    ${sheadF('02','In focus')}
    <div class="cols s">
-     <div class="panel">
-       <div class="pt">Project in focus ${tg('In execution')}</div>
-       <div class="big">Commercial Automation</div>
-       <div style="font-size:13px;color:var(--grey2);margin-top:8px">CRM + WhatsApp + AI</div>
-       <div class="pbar" style="width:100%;margin-top:18px"><i class="g" style="width:75%"></i></div>
-       <div style="display:flex;justify-content:space-between;margin-top:10px;font-size:12px;color:var(--grey)"><span>75% complete</span><span>Due 28 Jun 2026</span></div>
-     </div>
+     ${focusPanel()}
      <div class="panel">
        <div class="pt">Next steps</div>
        <div class="lst">
@@ -328,15 +345,11 @@ const TABS=[
    <table class="tbl">
      <thead><tr><th>Project</th><th>Status</th><th>Progress</th><th>Deadline</th><th>Impact</th></tr></thead>
      <tbody>
-       ${[['Commercial Automation','CRM + WhatsApp + AI','In execution',75,'g','28 Jun','R$ 87,430','+28%','pos'],
-          ['Integrations API','Internal systems','In execution',60,'g','30 May','R$ 45,210','+18%','pos'],
-          ['AI Training','AI for Support','In progress',40,'c','03 Jun','R$ 23,800','+12%','pos'],
-          ['Executive Dashboard','BI + Indicators','Attention',20,'r','15 May','R$ 12,400','-5%','neg'],
-          ['Financial Automation','Flows & reports','Waiting',10,'a','10 Jun','R$ 18,760','+8%','pos']].map(r=>`
-       <tr><td><div class="nm">${r[0]}</div><div class="sub">${r[1]}</div></td>
-       <td>${tg(r[2])}</td>
-       <td>${r[3]}%<div class="pbar"><i class="${r[4]}" style="width:${r[3]}%"></i></div></td>
-       <td>${r[5]}</td><td>${r[6]} <span class="${r[8]}" style="font-size:11px">${r[7]}</span></td></tr>`).join('')}
+       ${PROJECTS.map(p=>`
+       <tr><td><div class="nm">${p.name}</div><div class="sub">${p.subtitle||''}</div></td>
+       <td>${tg(p.status)}</td>
+       <td>${p.progress||0}%<div class="pbar"><i class="${STATUS_COLOR[p.status]||'g'}" style="width:${p.progress||0}%"></i></div></td>
+       <td>${fmtDate(p.deadline)}</td><td>R$ ${Number(p.impact_value||0).toLocaleString('en-US')} <span class="${p.impact_dir||''}" style="font-size:11px">${p.impact_pct>=0?'+':''}${p.impact_pct||0}%</span></td></tr>`).join('')}
      </tbody>
    </table>
    <div class="cols t2" style="margin-top:24px">
@@ -357,7 +370,7 @@ const TABS=[
      </div></div>
      <div>
        <div class="panel"><div class="pt">Pending approvals</div><div class="lst">
-         <div class="r"><div class="c"><b>Commercial Proposal</b><span>R$ 45,210</span></div>${tg('High')}</div>
+         ${PROPOSALS.filter(p=>p.is_pending).map(p=>`<div class="r"><div class="c"><b>${p.title}</b><span>R$ ${Number(p.value||0).toLocaleString('en-US')}</span></div>${tg(p.status)}</div>`).join('')}
          <div class="r"><div class="c"><b>Meta Ads Integration</b><span>Account connection</span></div>${tg('High')}</div>
          <div class="r"><div class="c"><b>Nurturing Flow</b><span>Lead automation</span></div>${tg('Medium')}</div>
        </div></div>
@@ -530,7 +543,8 @@ view.addEventListener('click',e=>{const p=e.target.closest('.pill');if(p){p.pare
 (function(){
   var hr=new Date().getHours();
   var greet=hr<12?'Good morning':(hr<18?'Good afternoon':'Good evening');
-  var hello=document.querySelector('.hello'); if(hello) hello.innerHTML=greet+', <span>Kaua</span>';
+  var hello=document.querySelector('.hello');
+  function setGreeting(name){ if(hello) hello.innerHTML=greet+', <span>'+(name||'')+'</span>'; }
   var dLong=new Date().toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
   var intro=document.getElementById('intro'),s1=document.getElementById('ist1'),s2=document.getElementById('ist2');
   var btn=document.getElementById('i-continue'); btn.style.display='none';
@@ -582,9 +596,39 @@ view.addEventListener('click',e=>{const p=e.target.closest('.pill');if(p){p.pare
     btn.style.display='none';
     setTimeout(function(){ s1.setAttribute('hidden',''); s2.removeAttribute('hidden'); runIntro(); },1900);
   }
+  function applyClientData(){
+    var nameEl=document.querySelector('.i-nm'); if(nameEl) nameEl.textContent=(PROFILE.contact_name||'')+'.';
+    setGreeting(PROFILE.contact_name);
+    var who=document.querySelector('.user .who');
+    if(who){ var b=who.querySelector('b'),sp=who.querySelector('span');
+      if(b) b.textContent=PROFILE.contact_name||'';
+      if(sp) sp.textContent=[PROFILE.company_name,PROFILE.role_label].filter(Boolean).join(' · ');
+    }
+    var av=document.querySelector('.user .av'); if(av) av.textContent=PROFILE.avatar_initials||'';
+    go(active);
+  }
+
+  function loadClientData(uid){
+    Promise.all([
+      supabaseClient.from('client_profiles').select('*').eq('user_id',uid).maybeSingle(),
+      supabaseClient.from('client_projects').select('*').eq('user_id',uid),
+      supabaseClient.from('client_proposals').select('*').eq('user_id',uid)
+    ]).then(function(res){
+      if(res[0].data) PROFILE=res[0].data;
+      if(res[1].data) PROJECTS=res[1].data;
+      if(res[2].data) PROPOSALS=res[2].data;
+      applyClientData();
+    });
+  }
+
   btn.addEventListener('click',function(){intro.classList.add('gone');setTimeout(function(){intro.style.display='none';},650);});
-  startIntro();
-  window.addEventListener('pageshow',function(e){ if(e.persisted) startIntro(); });
+  supabaseClient.auth.getSession().then(function(res){
+    var session=res.data && res.data.session;
+    if(!session){ location.href='acesso.html'; return; }
+    startIntro();
+    loadClientData(session.user.id);
+    window.addEventListener('pageshow',function(e){ if(e.persisted) startIntro(); });
+  });
 })();
 </script>
 </body>
