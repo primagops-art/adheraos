@@ -631,5 +631,187 @@ view.addEventListener('click',e=>{const p=e.target.closest('.pill');if(p){p.pare
   });
 })();
 </script>
+
+<style id="prospect-style">
+.side nav .item.locked{opacity:.32;cursor:not-allowed;}
+.side nav .item .lk{display:inline-block;margin-left:8px;font:700 9px/1 'JetBrains Mono',monospace;letter-spacing:.1em;opacity:.7;vertical-align:middle;}
+.pp-toast{position:fixed;left:50%;bottom:34px;transform:translateX(-50%) translateY(20px);background:#0c0c0c;border:1px solid var(--line);color:#fff;font:600 12px/1.4 'Helvetica Neue',Arial,sans-serif;letter-spacing:.02em;padding:13px 19px;opacity:0;pointer-events:none;transition:.35s;z-index:120;}
+.pp-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.pp-eyebrow{font:700 11px/1 'Helvetica Neue',Arial,sans-serif;letter-spacing:.22em;text-transform:uppercase;color:#fff;}
+.pp-title{font:800 42px/1.02 'Helvetica Neue',Arial,sans-serif;letter-spacing:-.03em;margin:16px 0 0;color:#fff;}
+.pp-sub{font:400 15px/1.55 'Helvetica Neue',Arial,sans-serif;color:rgba(255,255,255,.6);margin:14px 0 0;max-width:640px;}
+.pp-sec{margin-top:48px;border-top:1px solid var(--line);padding-top:26px;}
+.pp-sec .sn{font:700 11px/1 'Helvetica Neue',Arial,sans-serif;letter-spacing:.2em;color:rgba(255,255,255,.5);text-transform:uppercase;}
+.pp-sec .st{font:800 23px/1.1 'Helvetica Neue',Arial,sans-serif;letter-spacing:-.02em;color:#fff;margin:10px 0 0;}
+.pp-sec .sd{font:400 13px/1.5 'Helvetica Neue',Arial,sans-serif;color:rgba(255,255,255,.5);margin:7px 0 0;}
+.pp-mat{display:flex;gap:40px;align-items:flex-end;margin-top:24px;flex-wrap:wrap;}
+.pp-score{font:800 66px/.9 'JetBrains Mono','Helvetica Neue',monospace;color:#fff;letter-spacing:-.04em;}
+.pp-score small{font-size:20px;color:rgba(255,255,255,.4);font-weight:400;}
+.pp-bars{flex:1;min-width:280px;display:flex;flex-direction:column;gap:13px;}
+.pp-bar{display:flex;align-items:center;gap:13px;}
+.pp-bar .bl{width:104px;font:700 11px/1 'Helvetica Neue',Arial,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.7);}
+.pp-bar .bt{flex:1;height:6px;background:rgba(255,255,255,.08);position:relative;overflow:hidden;}
+.pp-bar .bt i{position:absolute;left:0;top:0;bottom:0;}
+.pp-bar .bv{width:32px;text-align:right;font:600 12px/1 'JetBrains Mono',monospace;color:#fff;}
+.pp-find{display:flex;gap:16px;padding:18px 0;border-bottom:1px solid var(--line-soft);}
+.pp-find .fn{font:700 13px/1 'JetBrains Mono',monospace;color:rgba(255,255,255,.4);padding-top:3px;}
+.pp-find .ff{font:600 15px/1.45 'Helvetica Neue',Arial,sans-serif;color:#fff;}
+.pp-find .fe{font:400 12px/1.5 'JetBrains Mono',monospace;color:rgba(255,255,255,.42);margin-top:8px;}
+.pp-mods{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:24px;}
+.pp-mod{border:1px solid var(--line);padding:22px;display:flex;flex-direction:column;}
+.pp-mod .mh{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;}
+.pp-mod .mc{font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.1em;color:#000;background:#fff;padding:5px 7px;white-space:nowrap;}
+.pp-mod .mp{font:700 14px/1.1 'JetBrains Mono',monospace;color:#fff;text-align:right;}
+.pp-mod .mp small{display:block;font-weight:400;font-size:9px;color:rgba(255,255,255,.45);letter-spacing:.06em;margin-top:5px;text-transform:uppercase;}
+.pp-mod .mn{font:800 17px/1.15 'Helvetica Neue',Arial,sans-serif;letter-spacing:-.01em;color:#fff;margin:18px 0 0;}
+.pp-mod .mw{font:400 13px/1.55 'Helvetica Neue',Arial,sans-serif;color:rgba(255,255,255,.55);margin:10px 0 0;}
+.pp-bud{border:1px solid var(--line);margin-top:24px;padding:8px 26px;}
+.pp-bud .brow{display:flex;justify-content:space-between;align-items:baseline;padding:15px 0;border-bottom:1px solid var(--line-soft);}
+.pp-bud .brow:last-child{border-bottom:0;}
+.pp-bud .bk{font:600 13px/1.3 'Helvetica Neue',Arial,sans-serif;color:rgba(255,255,255,.7);}
+.pp-bud .bv{font:700 16px/1 'JetBrains Mono',monospace;color:#fff;}
+.pp-bud .btot{padding-top:18px;}
+.pp-bud .btot .bk{color:#fff;font-weight:800;font-size:15px;}
+.pp-bud .btot .bv{font-size:26px;}
+.pp-cta{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-top:32px;}
+.pp-btn{appearance:none;border:0;cursor:pointer;background:var(--green);color:#001b06;font:700 14px/1 'Helvetica Neue',Arial,sans-serif;letter-spacing:.04em;padding:18px 27px;box-shadow:0 0 24px rgba(43,255,102,.28);transition:.25s;}
+.pp-btn:hover{box-shadow:0 0 40px rgba(43,255,102,.5);}
+.pp-btn:disabled{cursor:default;}
+.pp-note{font:400 12px/1.55 'Helvetica Neue',Arial,sans-serif;color:rgba(255,255,255,.45);max-width:380px;}
+.pp-empty{padding:90px 20px;text-align:center;color:rgba(255,255,255,.6);font:400 15px/1.65 'Helvetica Neue',Arial,sans-serif;}
+.pp-empty b{display:block;color:#fff;font:800 23px/1.2 'Helvetica Neue',Arial,sans-serif;margin-bottom:12px;letter-spacing:-.02em;}
+@media(max-width:720px){.pp-mods{grid-template-columns:1fr;}.pp-title{font-size:34px;}}
+</style>
+<script id="prospect-mode">
+(function(){
+  // ===== AdheraOS - prospect (proposal) mode =====
+  // Activates only when the URL has ?token=... The read workflow
+  // "Adhera - Motor de IA - Leitura" must be ACTIVE for this to respond.
+  var ENGINE_READ='https://adheraos.app.n8n.cloud/webhook/adhera-proposta';
+
+  function getToken(){
+    try{
+      var t=new URLSearchParams(location.search).get('token');
+      if(t) return t;
+      var m=(location.hash||'').match(/token=([^&]+)/);
+      return m?decodeURIComponent(m[1]):null;
+    }catch(e){ return null; }
+  }
+  var TOKEN=getToken();
+  if(!TOKEN) return; // no token -> keep the normal demo portal
+
+  var view=document.getElementById('view');
+  var navEl=document.getElementById('nav');
+
+  function brl(n){ n=Number(n); if(isNaN(n)) return null; return 'R$ '+n.toLocaleString('pt-BR'); }
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+  function firstName(n){ return String(n||'').trim().split(/\s+/)[0]||''; }
+  function initials(n){ var p=String(n||'').trim().split(/\s+/); return ((p[0]||'')[0]||'')+((p[1]||'')[0]||''); }
+
+  // blank the demo name immediately to avoid a flash of "Kaua"
+  ['.i-nm','.hello','.user .who b','.user .who span','.user .av'].forEach(function(sel){
+    var e=document.querySelector(sel); if(e) e.textContent='';
+  });
+
+  var TOAST;
+  function toast(msg){
+    if(!TOAST){ TOAST=document.createElement('div'); TOAST.className='pp-toast'; document.body.appendChild(TOAST); }
+    TOAST.textContent=msg; TOAST.classList.add('show');
+    clearTimeout(TOAST._t); TOAST._t=setTimeout(function(){ TOAST.classList.remove('show'); },2600);
+  }
+
+  function lockNav(){
+    if(!navEl) return;
+    var items=[['home','01','Home'],['projects','02','Projects'],['workspace','03','Workspace'],
+      ['vault','04','Vault'],['intelligence','05','Intelligence'],['analytics','06','Analytics'],
+      ['integrations','07','Integrations'],['automations','08','Automations'],['settings','09','Settings']];
+    navEl.innerHTML=items.map(function(it){
+      var on=it[0]==='projects';
+      return '<div class="item '+(on?'on':'locked')+'" data-id="'+it[0]+'"><span class="num">'+it[1]+'</span>'+it[2]+(on?'':'<span class="lk">LOCK</span>')+'</div>';
+    }).join('');
+    navEl.querySelectorAll('.item').forEach(function(e){
+      e.addEventListener('click',function(){
+        if(e.dataset.id==='projects'){ render(); }
+        else { toast('Available after you approve the proposal.'); }
+      });
+    });
+  }
+
+  function personalize(d){
+    var fn=firstName(d.contact_name);
+    var nm=document.querySelector('#intro .i-nm'); if(nm) nm.textContent=fn?fn+'.':'Welcome.';
+    var hello=document.querySelector('.hello'); if(hello) hello.innerHTML='Welcome, <span>'+esc(fn)+'</span>';
+    var who=document.querySelector('.user .who');
+    if(who){ var b=who.querySelector('b'), s=who.querySelector('span');
+      if(b) b.textContent=d.contact_name||fn; if(s) s.textContent=(d.company||'')+' \u00b7 Prospect'; }
+    var av=document.querySelector('.user .av'); if(av) av.textContent=(initials(d.contact_name)||'A').toUpperCase();
+  }
+
+  var DATA=null;
+
+  function proposalHTML(d){
+    var dims=[['data','Data','--cyan'],['automation','Automation','--violet'],['integration','Integration','--green'],['decision','Decision','--amber'],['scale','Scale','--red']];
+    var mb=d.maturity_breakdown||{};
+    var bars=dims.map(function(x){ var v=Number(mb[x[0]]||0);
+      return '<div class="pp-bar"><span class="bl">'+x[1]+'</span><span class="bt"><i style="width:'+v+'%;background:var('+x[2]+')"></i></span><span class="bv">'+v+'</span></div>'; }).join('');
+
+    var diag=(d.diagnosis||[]).map(function(f,i){ var n=('0'+(i+1)).slice(-2);
+      return '<div class="pp-find"><span class="fn">'+n+'</span><div class="fc"><div class="ff">'+esc(f.finding)+'</div>'+(f.evidence?'<div class="fe">'+esc(f.evidence)+'</div>':'')+'</div></div>'; }).join('');
+
+    function priceLabel(m){
+      if(m.price==null||m.billing==='on-scope') return '<span class="mp">On scope<small>after diagnosis</small></span>';
+      if(m.billing==='monthly') return '<span class="mp">'+esc(brl(m.price))+'<small>per month</small></span>';
+      return '<span class="mp">'+esc(brl(m.price))+'<small>one-time</small></span>';
+    }
+    var mods=(d.modules||[]).map(function(m){
+      return '<div class="pp-mod"><div class="mh"><span class="mc">'+esc(m.code||'')+'</span>'+priceLabel(m)+'</div><div class="mn">'+esc(m.name)+'</div><div class="mw">'+esc(m.why)+'</div></div>'; }).join('');
+
+    var oneTime=brl(d.budget_total);
+    var monthly=(d.modules||[]).filter(function(m){return m.billing==='monthly'&&m.price!=null;});
+    var hasScope=(d.modules||[]).some(function(m){return m.price==null||m.billing==='on-scope';});
+    var budRows='<div class="brow"><span class="bk">One-time implementation</span><span class="bv">'+(oneTime||'-')+'</span></div>';
+    monthly.forEach(function(m){ budRows+='<div class="brow"><span class="bk">'+esc(m.name)+' (recurring)</span><span class="bv">'+esc(brl(m.price))+' / mo</span></div>'; });
+    if(hasScope) budRows+='<div class="brow"><span class="bk">Integrations</span><span class="bv">On scope</span></div>';
+    budRows+='<div class="brow btot"><span class="bk">Total to start</span><span class="bv">'+(oneTime||'-')+'</span></div>';
+
+    return '<div class="pp-eyebrow">[ Your proposal ]</div>'+
+      '<h1 class="pp-title">Your operation,<br>mapped.</h1>'+
+      '<p class="pp-sub">Prepared for '+esc(d.company)+'. Below is your operational diagnostic, the recommended path, and a transparent investment. When you are ready, you can approve and start the integration.</p>'+
+      '<div class="pp-sec"><div class="sn">Operational maturity</div><div class="st">Where '+esc(d.company)+' stands today</div><div class="pp-mat"><div class="pp-score">'+esc(d.maturity_score)+'<small> / 100</small></div><div class="pp-bars">'+bars+'</div></div></div>'+
+      '<div class="pp-sec"><div class="sn">01 / Diagnosis</div><div class="st">What we found</div><div class="sd">Each finding is grounded in what you shared in your briefing.</div>'+diag+'</div>'+
+      '<div class="pp-sec"><div class="sn">02 / Recommended path</div><div class="st">Modules &amp; scope</div><div class="pp-mods">'+mods+'</div></div>'+
+      '<div class="pp-sec"><div class="sn">03 / Investment</div><div class="st">Transparent budget</div><div class="pp-bud">'+budRows+'</div>'+
+      '<div class="pp-cta"><button class="pp-btn" id="pp-approve">Approve &amp; start integration &gt;&gt;&gt;</button><span class="pp-note">Reviewing with your team? Reply to the email we sent and we will walk you through every line.</span></div></div>';
+  }
+
+  function render(){
+    if(!view) return;
+    if(!DATA){ view.innerHTML='<div class="pp-empty">Loading your proposal\u2026</div>'; return; }
+    view.innerHTML=proposalHTML(DATA);
+    var ap=document.getElementById('pp-approve');
+    if(ap) ap.addEventListener('click',function(){
+      // NOTE: real approval (status -> approved + onboarding) is a later step.
+      ap.textContent='Request sent \u2713'; ap.style.background='#fff'; ap.style.color='#000'; ap.style.boxShadow='none'; ap.disabled=true;
+      toast('Thank you. The Adhera team will reach out to start.');
+    });
+  }
+
+  function errorState(){
+    if(view) view.innerHTML='<div class="pp-empty"><b>This proposal link is invalid or has expired.</b>If you reached this from your email, please try again, or reply to that email and we will resend your access.</div>';
+  }
+
+  // boot
+  lockNav();
+  view.innerHTML='<div class="pp-empty">Loading your proposal\u2026</div>';
+  fetch(ENGINE_READ+'?token='+encodeURIComponent(TOKEN),{method:'GET'})
+    .then(function(r){ return r.json().catch(function(){return null;}); })
+    .then(function(j){ var d=Array.isArray(j)?j[0]:j;
+      if(!d||d.ok!==true){ errorState(); return; }
+      DATA=d; personalize(d); render(); })
+    .catch(function(){ errorState(); });
+})();
+</script>
+
 </body>
 </html>
+    
