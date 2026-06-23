@@ -707,6 +707,12 @@ view.addEventListener('click',e=>{const p=e.target.closest('.pill');if(p){p.pare
   var view=document.getElementById('view');
   var navEl=document.getElementById('nav');
 
+  // the real-session intro overlay never gets dismissed in prospect mode
+  // (its dismiss flow only runs after a successful Supabase login), so
+  // hide it immediately instead of leaving it stuck on screen forever.
+  var introEl=document.getElementById('intro');
+  if(introEl){ introEl.style.display='none'; }
+
   function brl(n){ n=Number(n); if(isNaN(n)) return null; return 'R$ '+n.toLocaleString('pt-BR'); }
   function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
   function firstName(n){ return String(n||'').trim().split(/\s+/)[0]||''; }
