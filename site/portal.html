@@ -624,7 +624,11 @@ view.addEventListener('click',e=>{const p=e.target.closest('.pill');if(p){p.pare
   btn.addEventListener('click',function(){intro.classList.add('gone');setTimeout(function(){intro.style.display='none';},650);});
   supabaseClient.auth.getSession().then(function(res){
     var session=res.data && res.data.session;
-    if(!session){ location.href='/acesso'; return; }
+    if(!session){
+      var hasToken=!!(new URLSearchParams(location.search).get('token'))||/token=/.test(location.hash);
+      if(!hasToken){ location.href='/acesso'; }
+      return;
+    }
     startIntro();
     loadClientData(session.user.id);
     window.addEventListener('pageshow',function(e){ if(e.persisted) startIntro(); });
