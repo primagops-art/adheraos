@@ -139,6 +139,16 @@
 <script src="supabase-config.js"></script>
 <script>
 (function(){
+  // preserves a prospect token (?token=...) from the access link through
+  // login, so /acesso?token=XYZ lands on /portal?token=XYZ after sign-in.
+  function getToken(){
+    try{
+      var t=new URLSearchParams(location.search).get('token');
+      if(t) return t;
+      var m=(location.hash||'').match(/token=([^&]+)/);
+      return m?decodeURIComponent(m[1]):null;
+    }catch(e){ return null; }
+  }
   window.tryLogin=function(e){
     e.preventDefault();
     var em=(document.getElementById('email').value||'').trim().toLowerCase();
@@ -146,7 +156,10 @@
     document.getElementById('err').style.display='none';
     supabaseClient.auth.signInWithPassword({email:em,password:pw}).then(function(res){
       if(res.error){ document.getElementById('err').style.display='block'; }
-      else { location.href='portal.html'; }
+      else {
+        var t=getToken();
+        location.href='portal.html'+(t?('?token='+encodeURIComponent(t)):'');
+      }
     });
     return false;
   };
