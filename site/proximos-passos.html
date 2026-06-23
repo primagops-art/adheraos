@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AdheraOS · Next steps</title>
+<style>
+  :root{
+    --black:#000;--white:#FFF;--grey:#8C8C8C;--grey2:#B8B8B8;
+    --line:rgba(255,255,255,.22);--line-soft:rgba(255,255,255,.10);
+    --green:#2BFF66;
+    --sans:'Helvetica Neue',Helvetica,Arial,sans-serif;
+    --serif:Georgia,'Times New Roman',serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{background:var(--black);color:var(--white);font-family:var(--sans);-webkit-font-smoothing:antialiased;line-height:1.45;min-height:100vh}
+  ::selection{background:var(--white);color:var(--black)}
+  .micro{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--grey)}
+
+  .wrap{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:64px 24px}
+  .top{display:flex;align-items:center;gap:10px;margin-bottom:56px}
+  .top .wm{font-size:15px;font-weight:700;letter-spacing:-.01em}
+  .top .dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);animation:pulse 2s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+
+  .card{max-width:560px;width:100%;text-align:left;animation:rise .7s cubic-bezier(.2,.7,.2,1) both}
+  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  .eyebrow{font:700 11px/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;color:#fff;margin-top:22px;display:block}
+  .title{font:800 42px/1.05 var(--sans);letter-spacing:-.03em;margin:16px 0 0;color:#fff}
+  .sub{font:400 15px/1.6 var(--sans);color:var(--grey2);margin:16px 0 0;max-width:480px}
+
+  .steps{margin-top:44px;border-top:1px solid var(--line)}
+  .step{display:flex;gap:16px;padding:20px 0;border-bottom:1px solid var(--line-soft)}
+  .step .sn{font:700 12px/1.4 'JetBrains Mono',monospace;color:var(--grey);padding-top:2px;min-width:22px}
+  .step .st{font:600 14px/1.4 var(--sans);color:#fff}
+  .step .sd{font:400 13px/1.55 var(--sans);color:var(--grey2);margin-top:6px}
+
+  .cta{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-top:40px}
+  .btn{appearance:none;border:0;cursor:pointer;background:var(--green);color:#001b06;text-decoration:none;display:inline-flex;align-items:center;font-family:inherit;font-size:14px;font-weight:700;letter-spacing:.04em;padding:18px 27px;box-shadow:0 0 24px rgba(43,255,102,.28);transition:.25s}
+  .btn:hover{box-shadow:0 0 40px rgba(43,255,102,.5)}
+  .btn2{display:inline-flex;align-items:center;appearance:none;border:1px solid var(--line);cursor:pointer;background:transparent;color:#fff;text-decoration:none;font-family:inherit;font-size:14px;font-weight:700;letter-spacing:.04em;padding:18px 27px;transition:.25s}
+  .btn2:hover{border-color:#fff;background:rgba(255,255,255,.06)}
+
+  .foot{margin-top:64px;display:flex;align-items:center;gap:14px}
+  .foot .ln{flex:0 0 38px;height:1px;background:var(--line)}
+  .foot .tag{font-family:var(--serif);font-style:italic;font-size:14px;color:var(--grey2);letter-spacing:.01em}
+
+  @media(max-width:560px){.title{font-size:32px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><span class="dot"></span><span class="wm">Adhera</span></div>
+  <div class="card">
+    <span class="micro">[ AdheraOS · Client Portal ]</span>
+    <span class="eyebrow">[ Approved ]</span>
+    <h1 class="title">You're in.</h1>
+    <p class="sub" id="sub">Thank you for approving your proposal. Our team has been notified and your AdheraOS workspace is being set up now.</p>
+
+    <div class="steps">
+      <div class="step"><span class="sn">01</span><div><div class="st">Team notified</div><div class="sd">Adhera received your approval and is already setting up your workspace.</div></div></div>
+      <div class="step"><span class="sn">02</span><div><div class="st">Workspace ready in about 30 minutes</div><div class="sd">Open your portal again shortly and your full workspace will be unlocked, with your own data in view.</div></div></div>
+      <div class="step"><span class="sn">03</span><div><div class="st">We will reach out</div><div class="sd">Expect a message from Adhera to schedule the kickoff and confirm the first steps.</div></div></div>
+    </div>
+
+    <div class="cta">
+      <a class="btn" id="open-portal" href="portal.html">Open your portal &gt;&gt;&gt;</a>
+      <a class="btn2" id="open-whatsapp" href="#" target="_blank" rel="noopener noreferrer">Talk on WhatsApp</a>
+    </div>
+  </div>
+
+  <div class="foot"><span class="ln"></span><span class="tag">Adhaerere — to unite by nature</span></div>
+</div>
+
+<script>
+(function(){
+  function getToken(){
+    try{
+      var t=new URLSearchParams(location.search).get('token');
+      if(t) return t;
+      var m=(location.hash||'').match(/token=([^&]+)/);
+      return m?decodeURIComponent(m[1]):null;
+    }catch(e){ return null; }
+  }
+  var TOKEN=getToken();
+  var WHATSAPP_NUMBER='5547991979683';
+  var ENGINE_READ='https://adheraos.app.n8n.cloud/webhook/adhera-proposta';
+
+  var portalLink=document.getElementById('open-portal');
+  var waLinkEl=document.getElementById('open-whatsapp');
+  if(portalLink) portalLink.href='portal.html'+(TOKEN?('?token='+encodeURIComponent(TOKEN)):'');
+
+  function setWa(company){
+    var msg='Hi, I am from '+(company||'my company')+' and I just approved my Adhera proposal.';
+    if(waLinkEl) waLinkEl.href='https://wa.me/'+WHATSAPP_NUMBER+'?text='+encodeURIComponent(msg);
+  }
+  setWa('');
+
+  if(!TOKEN) return;
+
+  fetch(ENGINE_READ+'?token='+encodeURIComponent(TOKEN),{method:'GET'})
+    .then(function(r){ return r.json().catch(function(){return null;}); })
+    .then(function(j){
+      var d=Array.isArray(j)?j[0]:j;
+      if(!d||d.ok!==true) return;
+      var fn=String(d.contact_name||'').trim().split(/\s+/)[0]||'';
+      var subEl=document.getElementById('sub');
+      if(subEl) subEl.textContent='Thank you'+(fn?', '+fn:'')+'. Our team has been notified and your AdheraOS workspace is being set up now.';
+      setWa(d.company);
+    })
+    .catch(function(){});
+})();
+</script>
+</body>
+</html>

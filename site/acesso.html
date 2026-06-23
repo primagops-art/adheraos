@@ -112,25 +112,29 @@
   <div class="form">
     <div class="form-inner">
       <span class="micro">[ Secure access ]</span>
-      <h2>Enter your portal.</h2>
-      <form onsubmit="return tryLogin(event)">
+      <h2 id="formTitle">Enter your portal.</h2>
+      <div class="err" id="tokenError">This access link is invalid or has expired. If you reached this from your email, please reply to that email and we will resend your access.</div>
+      <form id="loginForm" onsubmit="return tryLogin(event)">
         <div class="field">
           <label class="micro">Work email</label>
           <input id="email" type="email" placeholder="you@company.com" autocomplete="username">
         </div>
         <div class="field">
-          <label class="micro">Password</label>
+          <label class="micro" id="passLabel">Password</label>
           <input id="pass" type="password" placeholder="••••••••••" autocomplete="current-password">
         </div>
-        <button class="enter" type="submit">Enter AdheraOS &gt;&gt;&gt;</button>
+        <div class="field" id="pass2Field" style="display:none">
+          <label class="micro">Confirm password</label>
+          <input id="pass2" type="password" placeholder="••••••••••" autocomplete="new-password">
+        </div>
+        <button class="enter" type="submit" id="submitBtn">Enter AdheraOS &gt;&gt;&gt;</button>
         <div class="err" id="err">Invalid credentials — check your email and password.</div>
       </form>
-      <a class="forgot" href="#">Forgot access?</a>
+      <a class="forgot" href="#" id="forgotLink">Forgot access?</a>
 
       <div class="divider"></div>
 
       <div class="noacc">No access yet?<br><a href="diagnostico.html">Start with a diagnostic &gt;&gt;&gt;</a></div>
-      <div class="demo">Demo access · cliente@adheraos.com / adhera2026</div>
     </div>
   </div>
 
@@ -139,8 +143,14 @@
 <script src="supabase-config.js"></script>
 <script>
 (function(){
-  // preserves a prospect token (?token=...) from the access link through
-  // login, so /acesso?token=XYZ lands on /portal?token=XYZ after sign-in.
+  // ===== AdheraOS - real per-client access =====
+  // With ?token=... (from the proposal email), this checks the Leitura
+  // engine for the client tied to that token and switches between
+  // "create your password" (first access) and "sign in" (returning access).
+  // Without a token, this is a plain returning-client sign-in.
+  var ENGINE_READ='https://adheraos.app.n8n.cloud/webhook/adhera-proposta';
+  var CADASTRO='https://adheraos.app.n8n.cloud/webhook/adhera-cadastro';
+
   function getToken(){
     try{
       var t=new URLSearchParams(location.search).get('token');
@@ -149,18 +159,118 @@
       return m?decodeURIComponent(m[1]):null;
     }catch(e){ return null; }
   }
+  var TOKEN=getToken();
+
+  var emailEl=document.getElementById('email');
+  var passEl=document.getElementById('pass');
+  var pass2Field=document.getElementById('pass2Field');
+  var pass2El=document.getElementById('pass2');
+  var errEl=document.getElementById('err');
+  var titleEl=document.getElementById('formTitle');
+  var tokenErrEl=document.getElementById('tokenError');
+  var formEl=document.getElementById('loginForm');
+  var submitBtn=document.getElementById('submitBtn');
+
+  var MODE='signin'; // 'signin' | 'signup'
+
+  function setMode(m){
+    MODE=m;
+    if(m==='signup'){
+      titleEl.textContent='Create your password.';
+      pass2Field.style.display='';
+      passEl.setAttribute('autocomplete','new-password');
+      passEl.placeholder='Create a password';
+      submitBtn.textContent='Create access >>>';
+    } else {
+      titleEl.textContent='Enter your portal.';
+      pass2Field.style.display='none';
+      passEl.setAttribute('autocomplete','current-password');
+      passEl.placeholder='••••••••••';
+      submitBtn.textContent='Enter AdheraOS >>>';
+    }
+  }
+
+  function lockEmail(v){
+    emailEl.value=v||'';
+    emailEl.readOnly=true;
+    emailEl.style.opacity='.6';
+  }
+
+  function showTokenError(){
+    tokenErrEl.style.display='block';
+    formEl.style.display='none';
+  }
+
+  function showErr(msg){
+    errEl.textContent=msg;
+    errEl.style.display='block';
+  }
+  function showDefaultErr(){
+    errEl.style.display='block';
+  }
+  function hideErr(){
+    errEl.style.display='none';
+  }
+
+  function goPortal(){
+    location.href='portal.html'+(TOKEN?('?token='+encodeURIComponent(TOKEN)):'');
+  }
+
+  function finishSignup(uid,em){
+    if(!uid){ goPortal(); return; }
+    fetch(CADASTRO,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({token:TOKEN,user_id:uid,email:em})})
+      .then(function(){ goPortal(); })
+      .catch(function(){ goPortal(); });
+  }
+
+  if(TOKEN){
+    titleEl.textContent='Checking access…';
+    formEl.style.display='none';
+    fetch(ENGINE_READ+'?token='+encodeURIComponent(TOKEN),{method:'GET'})
+      .then(function(r){ return r.json().catch(function(){return null;}); })
+      .then(function(j){
+        var d=Array.isArray(j)?j[0]:j;
+        if(!d||d.ok!==true){ showTokenError(); return; }
+        formEl.style.display='';
+        lockEmail(d.email);
+        setMode(d.has_account?'signin':'signup');
+      })
+      .catch(function(){ showTokenError(); });
+  }
+
   window.tryLogin=function(e){
     e.preventDefault();
-    var em=(document.getElementById('email').value||'').trim().toLowerCase();
-    var pw=document.getElementById('pass').value||'';
-    document.getElementById('err').style.display='none';
-    supabaseClient.auth.signInWithPassword({email:em,password:pw}).then(function(res){
-      if(res.error){ document.getElementById('err').style.display='block'; }
-      else {
-        var t=getToken();
-        location.href='portal.html'+(t?('?token='+encodeURIComponent(t)):'');
-      }
-    });
+    hideErr();
+    var em=(emailEl.value||'').trim().toLowerCase();
+    var pw=passEl.value||'';
+
+    if(MODE==='signup'){
+      var pw2=pass2El.value||'';
+      if(pw.length<8){ showErr('Password must be at least 8 characters.'); return false; }
+      if(pw!==pw2){ showErr('Passwords do not match.'); return false; }
+      submitBtn.disabled=true;
+      supabaseClient.auth.signUp({email:em,password:pw}).then(function(res){
+        if(res.error){
+          submitBtn.disabled=false;
+          showErr(res.error.message&&res.error.message.indexOf('registered')>-1?'This email already has an account. Please sign in instead.':'Could not create your access. Please try again.');
+          return;
+        }
+        var user=res.data&&res.data.user;
+        var session=res.data&&res.data.session;
+        if(!session){
+          submitBtn.disabled=false;
+          showErr('Account created. Check your email to confirm access, then sign in.');
+          setMode('signin');
+          return;
+        }
+        finishSignup(user&&user.id,em);
+      });
+    } else {
+      supabaseClient.auth.signInWithPassword({email:em,password:pw}).then(function(res){
+        if(res.error){ showDefaultErr(); }
+        else { goPortal(); }
+      });
+    }
     return false;
   };
 })();

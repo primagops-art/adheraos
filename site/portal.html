@@ -684,6 +684,8 @@ view.addEventListener('click',e=>{const p=e.target.closest('.pill');if(p){p.pare
 .pp-note{font:400 12px/1.55 'Helvetica Neue',Arial,sans-serif;color:rgba(255,255,255,.45);max-width:380px;}
 .pp-empty{padding:90px 20px;text-align:center;color:rgba(255,255,255,.6);font:400 15px/1.65 'Helvetica Neue',Arial,sans-serif;}
 .pp-empty b{display:block;color:#fff;font:800 23px/1.2 'Helvetica Neue',Arial,sans-serif;margin-bottom:12px;letter-spacing:-.02em;}
+.pp-btn2{display:inline-flex;align-items:center;appearance:none;border:1px solid rgba(255,255,255,.35);cursor:pointer;background:transparent;color:#fff;font:700 14px/1 'Helvetica Neue',Arial,sans-serif;letter-spacing:.04em;padding:18px 27px;text-decoration:none;transition:.25s;}
+.pp-btn2:hover{border-color:#fff;background:rgba(255,255,255,.08);}
 @media(max-width:720px){.pp-mods{grid-template-columns:1fr;}.pp-title{font-size:34px;}}
 </style>
 <script id="prospect-mode">
@@ -692,6 +694,8 @@ view.addEventListener('click',e=>{const p=e.target.closest('.pill');if(p){p.pare
   // Activates only when the URL has ?token=... The read workflow
   // "Adhera - Motor de IA - Leitura" must be ACTIVE for this to respond.
   var ENGINE_READ='https://adheraos.app.n8n.cloud/webhook/adhera-proposta';
+  var ENGINE_APPROVE='https://adheraos.app.n8n.cloud/webhook/adhera-aprovar';
+  var WHATSAPP_NUMBER='5547991979683';
 
   function getToken(){
     try{
@@ -717,6 +721,16 @@ view.addEventListener('click',e=>{const p=e.target.closest('.pill');if(p){p.pare
   function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
   function firstName(n){ return String(n||'').trim().split(/\s+/)[0]||''; }
   function initials(n){ var p=String(n||'').trim().split(/\s+/); return ((p[0]||'')[0]||'')+((p[1]||'')[0]||''); }
+  function waLink(d){
+    var company=(d&&d.company)||'';
+    var msg='Hi, I am from '+(company||'my company')+' and I would like to talk about my Adhera proposal.';
+    return 'https://wa.me/'+WHATSAPP_NUMBER+'?text='+encodeURIComponent(msg);
+  }
+  function minutesSince(iso){
+    var t=Date.parse(iso||'');
+    if(isNaN(t)) return Infinity;
+    return (Date.now()-t)/60000;
+  }
 
   // blank the demo name immediately to avoid a flash of "Kaua"
   ['.i-nm','.hello','.user .who b','.user .who span','.user .av'].forEach(function(sel){
@@ -730,7 +744,7 @@ view.addEventListener('click',e=>{const p=e.target.closest('.pill');if(p){p.pare
     clearTimeout(TOAST._t); TOAST._t=setTimeout(function(){ TOAST.classList.remove('show'); },2600);
   }
 
-  function lockNav(){
+  function lockNav(onOpen,lockedMsg){
     if(!navEl) return;
     var items=[['home','01','Home'],['projects','02','Projects'],['workspace','03','Workspace'],
       ['vault','04','Vault'],['intelligence','05','Intelligence'],['analytics','06','Analytics'],
@@ -741,8 +755,8 @@ view.addEventListener('click',e=>{const p=e.target.closest('.pill');if(p){p.pare
     }).join('');
     navEl.querySelectorAll('.item').forEach(function(e){
       e.addEventListener('click',function(){
-        if(e.dataset.id==='projects'){ render(); }
-        else { toast('Available after you approve the proposal.'); }
+        if(e.dataset.id==='projects'){ if(onOpen) onOpen(); }
+        else { toast(lockedMsg||'Available after you approve the proposal.'); }
       });
     });
   }
@@ -753,7 +767,7 @@ view.addEventListener('click',e=>{const p=e.target.closest('.pill');if(p){p.pare
     var hello=document.querySelector('.hello'); if(hello) hello.innerHTML='Welcome, <span>'+esc(fn)+'</span>';
     var who=document.querySelector('.user .who');
     if(who){ var b=who.querySelector('b'), s=who.querySelector('span');
-      if(b) b.textContent=d.contact_name||fn; if(s) s.textContent=(d.company||'')+' \u00b7 Prospect'; }
+      if(b) b.textContent=d.contact_name||fn; if(s) s.textContent=(d.company||'')+' · Prospect'; }
     var av=document.querySelector('.user .av'); if(av) av.textContent=(initials(d.contact_name)||'A').toUpperCase();
   }
 
@@ -791,18 +805,30 @@ view.addEventListener('click',e=>{const p=e.target.closest('.pill');if(p){p.pare
       '<div class="pp-sec"><div class="sn">01 / Diagnosis</div><div class="st">What we found</div><div class="sd">Each finding is grounded in what you shared in your briefing.</div>'+diag+'</div>'+
       '<div class="pp-sec"><div class="sn">02 / Recommended path</div><div class="st">Modules &amp; scope</div><div class="pp-mods">'+mods+'</div></div>'+
       '<div class="pp-sec"><div class="sn">03 / Investment</div><div class="st">Transparent budget</div><div class="pp-bud">'+budRows+'</div>'+
-      '<div class="pp-cta"><button class="pp-btn" id="pp-approve">Approve &amp; start integration &gt;&gt;&gt;</button><span class="pp-note">Reviewing with your team? Reply to the email we sent and we will walk you through every line.</span></div></div>';
+      '<div class="pp-cta"><button class="pp-btn" id="pp-approve">Approve &amp; start integration &gt;&gt;&gt;</button><a class="pp-btn2" href="'+waLink(d)+'" target="_blank" rel="noopener noreferrer">Talk on WhatsApp</a><span class="pp-note">Reviewing with your team? Reply to the email we sent and we will walk you through every line.</span></div></div>';
   }
 
   function render(){
     if(!view) return;
-    if(!DATA){ view.innerHTML='<div class="pp-empty">Loading your proposal\u2026</div>'; return; }
+    if(!DATA){ view.innerHTML='<div class="pp-empty">Loading your proposal…</div>'; return; }
     view.innerHTML=proposalHTML(DATA);
     var ap=document.getElementById('pp-approve');
     if(ap) ap.addEventListener('click',function(){
-      // NOTE: real approval (status -> approved + onboarding) is a later step.
-      ap.textContent='Request sent \u2713'; ap.style.background='#fff'; ap.style.color='#000'; ap.style.boxShadow='none'; ap.disabled=true;
-      toast('Thank you. The Adhera team will reach out to start.');
+      ap.disabled=true; ap.textContent='Sending…';
+      fetch(ENGINE_APPROVE,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({token:TOKEN})})
+        .then(function(r){ return r.json().catch(function(){return null;}); })
+        .then(function(j){
+          if(!j||j.ok!==true){
+            ap.disabled=false; ap.textContent='Approve & start integration >>>';
+            toast('Could not process your approval. Please try again or message us on WhatsApp.');
+            return;
+          }
+          location.href='proximos-passos.html?token='+encodeURIComponent(TOKEN);
+        })
+        .catch(function(){
+          ap.disabled=false; ap.textContent='Approve & start integration >>>';
+          toast('Could not process your approval. Please try again or message us on WhatsApp.');
+        });
     });
   }
 
@@ -810,18 +836,68 @@ view.addEventListener('click',e=>{const p=e.target.closest('.pill');if(p){p.pare
     if(view) view.innerHTML='<div class="pp-empty"><b>This proposal link is invalid or has expired.</b>If you reached this from your email, please try again, or reply to that email and we will resend your access.</div>';
   }
 
+  function showPreparing(d){
+    if(!view) return;
+    view.innerHTML='<div class="pp-eyebrow">[ Approved ]</div>'+
+      '<h1 class="pp-title">Setting up your<br>workspace.</h1>'+
+      '<p class="pp-sub">Thank you, '+esc(firstName(d.contact_name))+'. Your proposal is approved and the Adhera team has been notified. We are preparing your AdheraOS workspace now. This usually takes just a few minutes.</p>'+
+      '<div class="pp-cta"><a class="pp-btn2" href="'+waLink(d)+'" target="_blank" rel="noopener noreferrer">Talk on WhatsApp</a><span class="pp-note">Refresh this page in a few minutes to access your full workspace.</span></div>';
+  }
+
+  // Unlocks the real demo shell for a returning, approved (30+ min) client:
+  // patches the shared TABS array so Settings shows the real identity and
+  // Projects shows an onboarding empty state instead of demo numbers. The
+  // other seven demo tabs are left untouched.
+  function unlockPortal(d){
+    personalize(d);
+    try{
+      var name=d.contact_name||'';
+      var company=d.company||'';
+      var ini=(initials(name||company)||'A').toUpperCase();
+      var displayName=name&&company?(name+' · '+company):(name||company||'Client');
+      if(typeof TABS!=='undefined'){
+        var settingsTab=TABS.find(function(t){return t.id==='settings';});
+        if(settingsTab){
+          var oldBlock='<div class="av" style="width:34px;height:34px;border:1px solid var(--violet);color:var(--violet);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">KA</div><div><b>Kaua · Acme Corp.</b><div style="font-size:11px;color:var(--grey)">Portal administrator</div></div>';
+          var newBlock='<div class="av" style="width:34px;height:34px;border:1px solid var(--violet);color:var(--violet);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">'+esc(ini)+'</div><div><b>'+esc(displayName)+'</b><div style="font-size:11px;color:var(--grey)">Portal administrator</div></div>';
+          var origSettingsRender=settingsTab.render;
+          settingsTab.render=function(){ return origSettingsRender().split(oldBlock).join(newBlock); };
+        }
+        var projectsTab=TABS.find(function(t){return t.id==='projects';});
+        if(projectsTab&&typeof phead==='function'){
+          projectsTab.render=function(){
+            return phead('<span class="br">[</span>Projects<span class="br">]</span>','Operational view of every project — phases, owners and impact.')+
+              '<div class="pp-empty"><b>Your workspace is ready.</b>No projects yet. Once the integration kicks off, you will see phases, owners and impact tracked here in real time.</div>';
+          };
+        }
+      }
+      if(typeof go==='function'&&typeof active!=='undefined'){ go(active); }
+    }catch(e){}
+  }
+
   // boot
-  lockNav();
-  view.innerHTML='<div class="pp-empty">Loading your proposal\u2026</div>';
+  lockNav(render,'Available after you approve the proposal.');
+  view.innerHTML='<div class="pp-empty">Loading your proposal…</div>';
   fetch(ENGINE_READ+'?token='+encodeURIComponent(TOKEN),{method:'GET'})
     .then(function(r){ return r.json().catch(function(){return null;}); })
     .then(function(j){ var d=Array.isArray(j)?j[0]:j;
       if(!d||d.ok!==true){ errorState(); return; }
-      DATA=d; personalize(d); render(); })
+      DATA=d;
+      if(d.status==='approved'){
+        if(minutesSince(d.approved_at)>=30){
+          unlockPortal(d);
+        } else {
+          personalize(d);
+          lockNav(function(){ showPreparing(d); },'Your workspace is being prepared. This will only take a few minutes.');
+          showPreparing(d);
+        }
+      } else {
+        personalize(d); render();
+      }
+    })
     .catch(function(){ errorState(); });
 })();
 </script>
 
 </body>
 </html>
-    
