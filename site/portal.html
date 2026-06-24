@@ -538,7 +538,16 @@ function go(id){active=id;
 }
 nav.querySelectorAll('.item').forEach(e=>e.addEventListener('click',()=>go(e.dataset.id)));
 view.addEventListener('click',e=>{const p=e.target.closest('.pill');if(p){p.parentElement.querySelectorAll('.pill').forEach(x=>x.classList.remove('on'));p.classList.add('on');}});
-(function(){var v=TABS.some(function(t){return t.id===location.hash.replace('#','')});go(v?location.hash.replace('#',''):'home');})();
+(function(){
+  // Neutral loading state while the portal decides which view applies
+  // (real session, prospect-mode token, or redirect) — avoids flashing the
+  // demo dashboard before the real status is known. The session/token flows
+  // below call go(active) themselves once they know what to render.
+  var v=TABS.some(function(t){return t.id===location.hash.replace('#','')});
+  active=v?location.hash.replace('#',''):'home';
+  nav.querySelectorAll('.item').forEach(function(e){e.classList.toggle('on',e.dataset.id===active);});
+  view.innerHTML='<div class="pp-empty">Loading…</div>';
+})();
 
 (function(){
   var hr=new Date().getHours();
@@ -846,8 +855,11 @@ view.addEventListener('click',e=>{const p=e.target.closest('.pill');if(p){p.pare
 
   // Unlocks the real demo shell for a returning, approved (30+ min) client:
   // patches the shared TABS array so Settings shows the real identity and
-  // Projects shows an onboarding empty state instead of demo numbers. The
-  // other seven demo tabs are left untouched.
+  // every tab that displayed fixed/fictional numbers as if they were this
+  // client's real data now shows an onboarding empty state instead. Also
+  // restores the normal (unlocked) nav, replacing the prospect-mode lock,
+  // so every tab is reachable and Projects opens its normal tab view
+  // instead of reopening the proposal.
   function unlockPortal(d){
     personalize(d);
     try{
@@ -870,6 +882,31 @@ view.addEventListener('click',e=>{const p=e.target.closest('.pill');if(p){p.pare
               '<div class="pp-empty"><b>Your workspace is ready.</b>No projects yet. Once the integration kicks off, you will see phases, owners and impact tracked here in real time.</div>';
           };
         }
+        if(typeof phead==='function'){
+          [
+            ['home','Home','Executive summary connected to your entire operation.','Your workspace is being set up.','Metrics will appear here as your project starts.'],
+            ['workspace','Workspace','Collaboration hub between you, Adhera and ISOS.','Your workspace is being set up.','Requests, approvals and conversations will appear here once your integration starts.'],
+            ['vault','Vault','Documents, knowledge and governance in one place.','Your vault is empty.','Documents, contracts and reports will appear here as they are added to your workspace.'],
+            ['analytics','Analytics','Executive panel with the operation’s critical indicators.','Your analytics are not ready yet.','Performance indicators will appear here once your operation is live.'],
+            ['integrations','Integrations','Every system converging into the AdheraOS core.','No integrations connected yet.','Connected systems will appear here as they go live.'],
+            ['automations','Automations','Flows and agents working continuously behind the scenes.','No automations running yet.','Active flows and agents will appear here once your integration starts.']
+          ].forEach(function(row){
+            var t=TABS.find(function(x){return x.id===row[0];});
+            if(!t) return;
+            t.render=function(){
+              return phead('<span class="br">[</span>'+row[1]+'<span class="br">]</span>',row[2])+
+                '<div class="pp-empty"><b>'+row[3]+'</b>'+row[4]+'</div>';
+            };
+          });
+        }
+      }
+      if(navEl&&typeof TABS!=='undefined'){
+        navEl.innerHTML=TABS.map(function(t){
+          return '<div class="item" data-id="'+t.id+'"><span class="num">'+t.n+'</span>'+t.label+(t.beta?'<span class="beta">BETA</span>':'')+'</div>';
+        }).join('');
+        navEl.querySelectorAll('.item').forEach(function(e){
+          e.addEventListener('click',function(){ if(typeof go==='function') go(e.dataset.id); });
+        });
       }
       if(typeof go==='function'&&typeof active!=='undefined'){ go(active); }
     }catch(e){}
