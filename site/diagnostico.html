@@ -114,7 +114,7 @@
 <script>
 const TOTAL = 6;
 const B = {
-  company:"", sector:"", sectorOther:"", size:"",
+  company:"", contactName:"", email:"", sector:"", sectorOther:"", size:"",
   areas:[], bottlenecks:[],
   erp:"", erpOther:"", crm:"", crmOther:"", tools:[], integration:"",
   centralization:"", indicators:"", cadence:"",
@@ -136,6 +136,8 @@ const STEPS = {
   1:()=>`<div class="eyebrow">Identification</div><h2>Let's start with your company</h2>
     <p class="sub">Takes about two minutes. Just tap the options — the clearer the signal, the sharper the diagnostic.</p>
     <div class="field"><label class="label">Company name</label>${text('company','e.g. Vale Logistics')}</div>
+    <div class="field"><label class="label">Your name</label>${text('contactName','e.g. Ana Silva')}</div>
+    <div class="field"><label class="label">Work email</label>${text('email','you@company.com')}</div>
     <div class="field"><label class="label">Sector</label>${chips('sector',['Energy','Agribusiness','Industry','Retail','Services','Other'],false)}${other('sector','Tell us your sector')}</div>
     <div class="field"><label class="label">Size</label>${chips('size',['Up to 10','11–50','51–200','200+'],false)}</div>`,
 
@@ -194,7 +196,7 @@ function review(){
   const erp=B.erp==='Other'?('Other — '+(B.erpOther||'?')):B.erp;
   const crm=B.crm==='Other'?('Other — '+(B.crmOther||'?')):B.crm;
   const rows=[
-    ['Company',B.company],['Sector',sec],['Size',B.size],
+    ['Company',B.company],['Contact',B.contactName],['Email',B.email],['Sector',sec],['Size',B.size],
     ['Focus',B.areas],['Bottlenecks',B.bottlenecks],
     ['ERP / CRM',(erp||'—')+' / '+(crm||'—')],['Integration',B.integration],
     ['Data',B.centralization],['Indicators',B.indicators],['Cadence',B.cadence],
@@ -239,8 +241,15 @@ function render(){
 }
 function go(n){i=Math.max(0,Math.min(7,n));window.scrollTo({top:0,behavior:'smooth'});render();}
 function send(){
+  const toast=document.getElementById('toast');
+  if(!B.company || !B.contactName || !B.email){
+    toast.textContent='Please fill company, your name and email before sending.';
+    toast.style.display='block';
+    return;
+  }
   const payload={
-    company:B.company, sector:B.sector, sector_other:B.sectorOther, size:B.size,
+    company:B.company, contact_name:B.contactName, email:B.email,
+    sector:B.sector, sector_other:B.sectorOther, size:B.size,
     areas:B.areas, bottlenecks:B.bottlenecks,
     erp:B.erp, erp_other:B.erpOther, crm:B.crm, crm_other:B.crmOther,
     tools:B.tools, integration:B.integration,
@@ -248,10 +257,29 @@ function send(){
     outcome:B.outcome, priority:B.priority, horizon:B.horizon,
     budget:B.budget, timeline:B.timeline, notes:B.notes
   };
-  supabaseClient.from('diagnostic_submissions').insert(payload).then(function(res){
-    const toast=document.getElementById('toast');
-    if(res.error){ toast.textContent='Could not send — please try again.'; }
-    toast.style.display='block';
+  // Best-effort lead log (kept for analytics; original diagnostic_submissions columns only).
+  supabaseClient.from('diagnostic_submissions').insert({
+    company:B.company, sector:B.sector, sector_other:B.sectorOther, size:B.size,
+    areas:B.areas, bottlenecks:B.bottlenecks,
+    erp:B.erp, erp_other:B.erpOther, crm:B.crm, crm_other:B.crmOther,
+    tools:B.tools, integration:B.integration,
+    centralization:B.centralization, indicators:B.indicators, cadence:B.cadence,
+    outcome:B.outcome, priority:B.priority, horizon:B.horizon,
+    budget:B.budget, timeline:B.timeline, notes:B.notes
+  }).then(function(){});
+  toast.textContent='Sending to the Adhera engine — this can take a few seconds...';
+  toast.style.display='block';
+  fetch('https://adheraos.app.n8n.cloud/webhook/adhera-intake',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(payload)
+  }).then(function(r){return r.json().catch(function(){return {};});})
+  .then(function(data){
+    toast.textContent = (data && data.ok)
+      ? '✓ Briefing sent to the Adhera engine — check your email for the proposal.'
+      : 'Could not send — please try again.';
+  }).catch(function(){
+    toast.textContent='Could not send — please try again.';
   });
 }
 render();
