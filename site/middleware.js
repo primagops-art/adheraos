@@ -8,9 +8,39 @@
 // The password itself lives only in the SITE_ACCESS_CODE environment
 // variable (Vercel -> Project -> Settings -> Environment Variables). It is
 // never written to this file or committed to the repo.
+//
+// Note: the gate token logic below is duplicated in api/gate.js on purpose.
+// Vercel's zero-config Edge Functions (no framework/build step on this
+// static site) can't resolve a shared local import across two separate
+// Edge Functions, so each function carries its own copy instead of
+// importing a shared ./lib file.
 
 import { next } from '@vercel/functions';
-import { GATE_COOKIE_NAME, computeGateToken } from './lib/gate-auth.js';
+
+const GATE_COOKIE_NAME = 'adhera_gate';
+const TOKEN_PAYLOAD = 'adheraos-site-gate-v1';
+
+function toHex(buffer) {
+  return Array.from(new Uint8Array(buffer))
+    .map((b) => b.toString(16).padStart(2, '0'))
+    .join('');
+}
+
+async function computeGateToken(secret) {
+  const key = await crypto.subtle.importKey(
+    'raw',
+    new TextEncoder().encode(secret),
+    { name: 'HMAC', hash: 'SHA-256' },
+    false,
+    ['sign'],
+  );
+  const signature = await crypto.subtle.sign(
+    'HMAC',
+    key,
+    new TextEncoder().encode(TOKEN_PAYLOAD),
+  );
+  return toHex(signature);
+}
 
 export const config = {
   runtime: 'edge',
