@@ -31,7 +31,7 @@
   /* ── Canvas ── */
   .canvas {
     position: relative; z-index: 1;
-    width: 1792px; height: 860px;
+    width: 1680px; height: 820px;
     margin: 0 auto;
     /* scale to fit viewport */
     transform-origin: top center;
@@ -41,7 +41,7 @@
   .topbar {
     position: absolute;
     top: 60px;
-    left: 200px; right: 200px;
+    left: 200px; right: 40px;
     height: 52px;
     display: flex; align-items: center; gap: 12px;
     z-index: 10;
@@ -195,7 +195,7 @@
     backdrop-filter: blur(28px) saturate(140%);
     padding: 16px;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1.12fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr;
     gap: 16px;
     box-shadow:
@@ -253,36 +253,39 @@
   .badge-green  { background: rgba(49,214,123,0.18); color: #31D67B;  border: 1px solid rgba(49,214,123,0.3); }
 
   /* ── Card: Intelligence ── */
-  .card-intelligence { grid-column: 1; grid-row: 1; }
-  .intel-sub { font-size: 13px; color: rgba(255,255,255,0.62); margin-top: 4px; margin-bottom: 16px; }
-  .intel-body { display: flex; gap: 16px; flex: 1; min-height: 0; }
+  .card-intelligence { grid-column: 1; grid-row: 1; padding: 22px; }
+  .card-intelligence .card-title { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; white-space: nowrap; }
+  .card-intelligence .badge { flex-shrink: 0; }
+  .intel-sub { font-size: 12px; color: rgba(255,255,255,0.62); margin-top: 5px; margin-bottom: 8px; }
+  .intel-body { display: flex; align-items: center; gap: 18px; flex: 1; min-height: 0; margin: 2px 0 10px; overflow: hidden; }
   .intel-logo-wrap {
-    width: 130px; flex-shrink: 0;
+    width: 104px; flex-shrink: 0;
     display: flex; align-items: center; justify-content: center;
   }
   .intel-logo-wrap img { width: 100%; height: auto; object-fit: contain; }
-  .intel-list { flex: 1; display: flex; flex-direction: column; gap: 10px; justify-content: center; }
-  .intel-item { display: flex; align-items: flex-start; gap: 10px; }
+  .intel-list { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; justify-content: center; }
+  .intel-item { display: flex; align-items: flex-start; gap: 9px; min-width: 0; }
   .intel-item-icon {
-    width: 28px; height: 28px; border-radius: 8px;
+    width: 26px; height: 26px; border-radius: 8px;
     background: rgba(123,77,255,0.18);
     border: 1px solid rgba(123,77,255,0.25);
     display: flex; align-items: center; justify-content: center;
     flex-shrink: 0;
   }
-  .intel-item-icon svg { width: 14px; height: 14px; color: #7B4DFF; }
-  .intel-item-text .label { font-size: 14px; font-weight: 500; }
-  .intel-item-text .desc  { font-size: 12px; color: rgba(255,255,255,0.62); line-height: 1.4; }
+  .intel-item-icon svg { width: 13px; height: 13px; color: #9B78FF; }
+  .intel-item-text { min-width: 0; }
+  .intel-item-text .label { font-size: 13px; font-weight: 600; line-height: 1.2; }
+  .intel-item-text .desc  { font-size: 11px; color: rgba(255,255,255,0.62); line-height: 1.3; margin-top: 2px; }
   .intel-input {
     display: flex; align-items: center; gap: 10px;
     background: rgba(14,18,30,0.55);
     border: 1px solid rgba(255,255,255,0.14);
     border-radius: 999px;
-    padding: 10px 10px 10px 18px;
-    margin-top: auto;
+    padding: 9px 9px 9px 16px;
+    margin-top: 0;
     box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
   }
-  .intel-input span { font-size: 13px; color: rgba(255,255,255,0.42); flex: 1; }
+  .intel-input span { font-size: 11px; line-height: 1.35; color: rgba(255,255,255,0.48); flex: 1; }
   .intel-send {
     width: 34px; height: 34px; border-radius: 50%;
     background: #7B4DFF;
@@ -454,10 +457,10 @@
 
   /* ── Responsive scaling ── */
   @media (max-width: 1800px) {
-    .canvas { transform: scale(calc(100vw / 1792)); }
+    .canvas { transform: scale(calc(100vw / 1680)); }
   }
   @media (max-height: 900px) and (min-width: 1800px) {
-    .canvas { transform: scale(calc(100vh / 860)); }
+    .canvas { transform: scale(calc(100vh / 820)); }
   }
 
   /* ── Nav Tooltips ── */
@@ -702,7 +705,7 @@
   .chip{padding:4px 8px;border:1px solid rgba(255,255,255,.13);border-radius:999px;color:rgba(255,255,255,.62);font-size:9px;white-space:nowrap}.chip.green{color:#57efa7;border-color:rgba(53,233,138,.3)}.chip.amber{color:#ffc66d;border-color:rgba(255,184,87,.3)}.chip.red{color:#ff8396;border-color:rgba(255,97,121,.3)}.chip.violet{color:#b9a5ff;border-color:rgba(155,120,255,.35)}
   .progress-line{height:5px;overflow:hidden;border-radius:99px;background:rgba(255,255,255,.08);margin-top:7px}.progress-line i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#6854ff,#31c7ff);box-shadow:0 0 13px rgba(80,104,255,.55)}
   .project-table{width:100%;border-collapse:collapse}.project-table th{color:rgba(255,255,255,.38);font-size:9px;letter-spacing:.11em;text-transform:uppercase;text-align:left;font-weight:600;padding:0 10px 9px}.project-table td{padding:10px;font-size:11px;border-top:1px solid rgba(255,255,255,.08);vertical-align:middle}.project-table strong{display:block;font-size:12px}.project-table small{color:rgba(255,255,255,.4);font-size:9px}
-  .phase-stack{display:flex;height:56px;overflow:hidden;border-radius:15px;border:1px solid rgba(255,255,255,.1)}.phase{display:flex;align-items:center;justify-content:center;flex-direction:column;min-width:58px;font-size:9px;color:white}.phase b{font-size:17px}.phase:nth-child(1){background:#3258cc}.phase:nth-child(2){background:#6746c9}.phase:nth-child(3){background:#158b70}.phase:nth-child(4){background:#a2722d}.phase:nth-child(5){background:#9b3c5b}
+  .phase-stack{display:flex;height:64px;overflow:hidden;border-radius:16px;border:1px solid rgba(255,255,255,.18);box-shadow:0 12px 28px rgba(0,0,0,.22)}.phase{display:flex;align-items:center;justify-content:center;flex-direction:column;min-width:58px;font-size:9px;font-weight:600;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.45);transition:filter .2s ease,transform .2s ease}.phase:hover{filter:brightness(1.14);transform:translateY(-2px)}.phase b{font-size:19px;line-height:1.05}.phase:nth-child(1){background:#0B5FFF}.phase:nth-child(2){background:#6D28D9}.phase:nth-child(3){background:#008F5B}.phase:nth-child(4){background:#C2410C}.phase:nth-child(5){background:#DC163D}
   .bar-list{display:grid;gap:11px}.bar-row{display:grid;grid-template-columns:105px 1fr 38px;align-items:center;gap:10px;font-size:11px}.bar-track{height:8px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden}.bar-track i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#654bff,#1de4a4)}
   .topology{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:17px;min-height:190px}.core-node{padding:13px 22px;border-radius:16px;border:1px solid rgba(155,120,255,.55);background:rgba(105,78,255,.14);box-shadow:0 0 30px rgba(105,78,255,.16);font-weight:700}.node-cloud{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}.node{padding:7px 10px;border:1px solid rgba(255,255,255,.12);border-radius:999px;background:rgba(255,255,255,.04);font-size:10px}
   .workflow{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.flow-step{position:relative;padding:13px;border-radius:16px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.1)}.flow-step:not(:last-child)::after{content:'→';position:absolute;right:-9px;top:50%;transform:translateY(-50%);color:#a78dff;z-index:2}.flow-step b{font-size:11px}.flow-step span{display:block;color:rgba(255,255,255,.4);font-size:9px;margin-top:4px}
@@ -787,15 +790,15 @@
         <div class="intel-list">
           <div class="intel-item">
             <div class="intel-item-icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg></div>
-            <div class="intel-item-text"><div class="label">Entenda</div><div class="desc">Insights e respostas sobre sua operação</div></div>
+            <div class="intel-item-text"><div class="label">Entenda</div><div class="desc">Respostas sobre sua operação</div></div>
           </div>
           <div class="intel-item">
             <div class="intel-item-icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
-            <div class="intel-item-text"><div class="label">Analise</div><div class="desc">Dados, desempenho e resultados</div></div>
+            <div class="intel-item-text"><div class="label">Analise</div><div class="desc">Desempenho e resultados</div></div>
           </div>
           <div class="intel-item">
             <div class="intel-item-icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/></svg></div>
-            <div class="intel-item-text"><div class="label">Oriente</div><div class="desc">Recomendações para melhores decisões</div></div>
+            <div class="intel-item-text"><div class="label">Oriente</div><div class="desc">Recomendações para decidir</div></div>
           </div>
         </div>
       </div>
@@ -943,14 +946,14 @@
 <script>
   function fit() {
     const c = document.querySelector('.canvas');
-    const sx = window.innerWidth / 1792;
-    const sy = window.innerHeight / 860;
+    const sx = window.innerWidth / 1680;
+    const sy = window.innerHeight / 820;
     const s = Math.min(sx, sy, 1);
     c.style.transform = 'scale(' + s + ')';
     c.style.transformOrigin = 'top left';
     c.style.position = 'absolute';
-    c.style.left = ((window.innerWidth - 1792 * s) / 2) + 'px';
-    c.style.top = ((window.innerHeight - 860 * s) / 2) + 'px';
+    c.style.left = ((window.innerWidth - 1680 * s) / 2) + 'px';
+    c.style.top = ((window.innerHeight - 820 * s) / 2) + 'px';
   }
   window.addEventListener('resize', fit);
   fit();
