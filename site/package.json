@@ -2,6 +2,10 @@
   "name": "adheraos-site",
   "private": true,
   "type": "module",
+  "scripts": {
+    "dev": "node ../tools/local-server.mjs --port 4173",
+    "start": "npm run dev"
+  },
   "dependencies": {
     "@vercel/functions": "^3.6.2"
   }

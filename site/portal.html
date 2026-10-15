@@ -25,7 +25,7 @@
   /* ── Background ── */
   .bg-scene {
     position: fixed; inset: 0; z-index: 0;
-    background: url("/portal/adheraos-client/spatial-background.jpg") center bottom / cover no-repeat;
+    background: url("portal/adheraos-client/spatial-background.jpg") center bottom / cover no-repeat;
   }
   .bg-overlay {
     position: fixed; inset: 0; z-index: 0;
@@ -732,7 +732,7 @@
   <div class="splash-blur"></div>
   <div class="splash-content">
     <div class="splash-logo">
-      <img src="/portal/adheraos-client/adhera-mark.png" alt="Adhera">
+      <img src="portal/adheraos-client/adhera-mark.png" alt="Adhera">
       <div class="splash-logo-glow"></div>
     </div>
     <div class="splash-line"></div>
@@ -752,7 +752,7 @@
       <span>Bom dia, Kaua</span>
     </div>
     <div class="top-search">
-      <img class="top-search-logo" src="/portal/adheraos-client/adhera-mark.png" alt="Adhera">
+      <img class="top-search-logo" src="portal/adheraos-client/adhera-mark.png" alt="Adhera">
       <span>Como posso ajudar sua operação?</span>
     </div>
     <div class="top-date">
@@ -768,7 +768,7 @@
 
   <!-- ── Sidebar ── -->
   <nav class="sidebar">
-    <div class="nav-logo"><img src="/portal/adheraos-client/adhera-mark.png" alt="Adhera"></div>
+    <div class="nav-logo"><img src="portal/adheraos-client/adhera-mark.png" alt="Adhera"></div>
     <div class="nav-divider"></div>
     <div class="nav-item active" data-view="home" data-tip="Home" role="button" tabindex="0" aria-label="Abrir Home"><span class="nav-tooltip">Home</span><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
     <div class="nav-item" data-view="projects" data-tip="Projetos" role="button" tabindex="0" aria-label="Abrir Projetos"><span class="nav-tooltip">Projetos</span><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></div>
@@ -792,7 +792,7 @@
       <div class="intel-sub">Núcleo operacional inteligente</div>
       <div class="intel-body">
         <div class="intel-logo-wrap">
-          <img src="/portal/adheraos-client/adhera-mark.png" alt="Adhera">
+          <img src="portal/adheraos-client/adhera-mark.png" alt="Adhera">
         </div>
         <div class="intel-list">
           <div class="intel-item">
@@ -1057,7 +1057,7 @@
   openView(views[initialView] ? initialView : 'home', false);
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="/supabase-config.js"></script>
+<script src="supabase-config.js"></script>
 <script>
   (async function protectAndPersonalizePortal() {
     function firstName(value) {
@@ -1080,7 +1080,7 @@
       const sessionResult = await supabaseClient.auth.getSession();
       const session = sessionResult.data && sessionResult.data.session;
       if (!session) {
-        location.replace('/acesso');
+        location.replace('acesso.html');
         return;
       }
 
@@ -1123,7 +1123,7 @@
       document.documentElement.classList.remove('auth-pending');
     } catch (error) {
       console.error('Não foi possível validar a sessão do portal.', error);
-      location.replace('/acesso');
+      location.replace('acesso.html');
     }
   })();
 </script>

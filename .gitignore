@@ -4,3 +4,6 @@
 node_modules
 .DS_Store
 Thumbs.db
+tools/.local-server.json
+tools/.local-server.log
+tools/.local-server-error.log
