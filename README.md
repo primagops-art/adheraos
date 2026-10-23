@@ -2,17 +2,26 @@
 
 Esta é a pasta operacional do site público e do portal de clientes da Adhera.
 
-## Como abrir no Windows
+## Acesso principal — Vercel
 
 Não abra `index.html`, `acesso.html` ou `portal.html` diretamente pelo Explorador. O portal usa rotas HTTP e uma sessão de autenticação do Supabase; por isso, o modo `file://` não reproduz o funcionamento real.
 
-Na raiz desta pasta, use um dos atalhos:
+Para uso normal, utilize os atalhos principais da raiz:
 
-- `Abrir Portal AdheraOS.cmd` — inicia o servidor local e abre a tela de acesso do portal.
-- `Abrir Site Adhera.cmd` — inicia o servidor local e abre o site institucional.
-- `Parar AdheraOS Local.cmd` — encerra somente o servidor local iniciado por esses atalhos.
+- `Abrir Portal AdheraOS.cmd` — abre `https://adheraos.com/acesso` na produção da Vercel.
+- `Abrir Site Adhera.cmd` — abre `https://adheraos.com/` na produção da Vercel.
 
-O servidor roda oculto e escolhe a primeira porta livre entre `4173` e `4182`.
+Esses dois atalhos não iniciam localhost e não dependem de um processo rodando no computador.
+
+## Desenvolvimento local
+
+Use somente quando estiver alterando ou testando arquivos antes do deploy:
+
+- `Abrir Portal AdheraOS - Local.cmd` — inicia o servidor local e abre o login local.
+- `Abrir Site Adhera - Local.cmd` — inicia o servidor local e abre o site local.
+- `Parar AdheraOS Local.cmd` — encerra somente o servidor local iniciado pelos atalhos de desenvolvimento.
+
+O servidor de desenvolvimento roda oculto e escolhe a primeira porta livre entre `4173` e `4182`.
 
 ## Estrutura
 
@@ -20,6 +29,8 @@ O servidor roda oculto e escolhe a primeira porta livre entre `4173` e `4182`.
 AdheraOS - Recuperacao Legacy/
 ├── Abrir Portal AdheraOS.cmd
 ├── Abrir Site Adhera.cmd
+├── Abrir Portal AdheraOS - Local.cmd
+├── Abrir Site Adhera - Local.cmd
 ├── Parar AdheraOS Local.cmd
 ├── site/                         # raiz do site e do deploy
 │   ├── index.html                # site institucional
