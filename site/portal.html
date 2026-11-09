@@ -11,6 +11,11 @@
   :root {
     --neon-green: #00FF85;
     --neon-green-rgb: 0, 255, 133;
+    --sidebar-glass-tint: rgba(255,255,255,0.075);
+    --sidebar-glass-fill: rgba(255,255,255,0.82);
+    --sidebar-glass-hover: rgba(255,255,255,0.11);
+    --sidebar-glass-solid: #111522;
+    --sidebar-glass-spring: cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   html, body {
@@ -138,22 +143,68 @@
   /* ── Sidebar ── */
   .sidebar {
     position: absolute;
+    isolation: isolate;
     left: 118px; top: 126px;
     width: 72px; height: 640px;
-    background: linear-gradient(180deg, rgba(28,32,48,0.50), rgba(8,10,18,0.45));
-    border: 1px solid rgba(255,255,255,0.24);
+    background:
+      linear-gradient(145deg, rgba(255,255,255,0.12), transparent 34%),
+      linear-gradient(180deg, var(--sidebar-glass-tint), rgba(8,10,18,0.18));
+    border: 1px solid rgba(255,255,255,0.18);
     border-radius: 36px;
-    backdrop-filter: blur(28px) saturate(140%);
+    -webkit-backdrop-filter: blur(8px) saturate(180%);
+    backdrop-filter: blur(8px) saturate(180%);
     display: flex; flex-direction: column; align-items: center;
     padding: 20px 0;
     gap: 6px;
     z-index: 10;
     overflow: visible;
     box-shadow: 
-      0 24px 80px rgba(0,0,0,0.55),
-      0 0 40px 6px rgba(70,90,255,0.14),
-      inset 0 1px 0 rgba(255,255,255,0.26),
-      inset 0 0 50px rgba(90,110,255,0.12);
+      inset 1.5px 1.5px 0 -0.5px rgba(255,255,255,0.62),
+      inset -1px -1px 0 -0.5px rgba(255,255,255,0.28),
+      inset 0 0 0 1px rgba(255,255,255,0.08),
+      inset 0 0 28px rgba(116,130,255,0.08),
+      0 24px 72px -18px rgba(0,0,0,0.72),
+      0 0 38px rgba(70,90,255,0.12);
+    outline: 1px solid transparent;
+    outline-offset: -1px;
+  }
+  .sidebar::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: radial-gradient(110px circle at var(--sidebar-glass-x, 28%) var(--sidebar-glass-y, 6%), rgba(255,255,255,0.26), transparent 68%);
+    opacity: 0.72;
+    transition: opacity 220ms ease;
+  }
+  .sidebar > *:not(.nav-glass-indicator) { position: relative; z-index: 2; }
+  .nav-glass-indicator {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    z-index: 1;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--sidebar-glass-fill);
+    box-shadow:
+      inset 1.5px 1.5px 0 rgba(255,255,255,0.9),
+      inset -1px -1px 0 rgba(91,80,170,0.16),
+      0 0 26px rgba(255,255,255,0.32),
+      0 0 48px rgba(115,90,255,0.28);
+    pointer-events: none;
+    transform: translate3d(-50%, var(--nav-glass-y, 89px), 0);
+    transition: transform 600ms var(--sidebar-glass-spring), box-shadow 220ms ease;
+  }
+  .nav-glass-indicator.is-instant { transition: none; }
+  .nav-glass-indicator.is-moving {
+    box-shadow:
+      inset 1.5px 1.5px 0 rgba(255,255,255,0.95),
+      inset -1px -1px 0 rgba(91,80,170,0.18),
+      0 0 34px rgba(255,255,255,0.4),
+      0 0 56px rgba(115,90,255,0.34);
   }
   .nav-logo { width: 38px; height: 38px; margin-bottom: 8px; }
   .nav-logo img { width: 100%; height: 100%; object-fit: contain; }
@@ -161,14 +212,24 @@
   .nav-item {
     width: 44px; height: 44px; border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    cursor: pointer; transition: all 0.2s;
+    cursor: pointer;
+    transition: color 200ms ease, background 200ms ease, transform 600ms var(--sidebar-glass-spring);
     color: rgba(255,255,255,0.62);
     position: relative;
   }
-  .nav-item:hover { background: rgba(255,255,255,0.10); color: rgba(255,255,255,0.9); }
+  .nav-item:hover { background: var(--sidebar-glass-hover); color: rgba(255,255,255,0.96); }
+  .nav-item:active { transform: scale(1.08); }
   .nav-item.active {
-    background: #fff; color: #000;
-    box-shadow: 0 0 28px rgba(255,255,255,0.45), 0 0 48px rgba(115,90,255,0.35);
+    background: transparent;
+    color: #090b12;
+    box-shadow: none;
+    font-weight: 600;
+  }
+  .nav-item.active:hover { background: transparent; color: #090b12; }
+  .nav-item:focus-visible {
+    outline: 2px solid #000;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px #fff;
   }
   .nav-item svg { width: 20px; height: 20px; stroke-width: 1.6; }
   .nav-spacer { flex: 1; }
@@ -184,6 +245,51 @@
     width: 10px; height: 10px; border-radius: 50%;
     background: var(--neon-green); border: 2px solid #0a0c14;
     box-shadow: 0 0 12px rgba(var(--neon-green-rgb), 0.72);
+  }
+
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .sidebar { background: rgba(17,21,34,0.96); }
+  }
+
+  @media (prefers-reduced-transparency: reduce) {
+    .sidebar {
+      background: var(--sidebar-glass-solid);
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
+      border-color: rgba(255,255,255,0.32);
+    }
+    .sidebar::before { display: none; }
+    .nav-glass-indicator { background: #fff; }
+  }
+
+  @media (prefers-contrast: more) {
+    .sidebar {
+      background: var(--sidebar-glass-solid);
+      outline: 2px solid #fff;
+      box-shadow: none;
+    }
+    .nav-glass-indicator { outline: 2px solid #000; box-shadow: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sidebar,
+    .nav-item,
+    .nav-glass-indicator { animation: none !important; transition: none !important; }
+  }
+
+  @media (forced-colors: active) {
+    .sidebar {
+      color: CanvasText;
+      background: Canvas;
+      border-color: CanvasText;
+      outline: 1px solid CanvasText;
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
+      box-shadow: none;
+    }
+    .sidebar::before { display: none; }
+    .nav-glass-indicator { background: Highlight; box-shadow: none; forced-color-adjust: none; }
+    .nav-item.active { color: HighlightText; forced-color-adjust: none; }
   }
 
   /* ── Dashboard Container ── */
@@ -717,7 +823,7 @@
   .topology{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:17px;min-height:190px}.core-node{padding:13px 22px;border-radius:16px;border:1px solid rgba(155,120,255,.55);background:rgba(105,78,255,.14);box-shadow:0 0 30px rgba(105,78,255,.16);font-weight:700}.node-cloud{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}.node{padding:7px 10px;border:1px solid rgba(255,255,255,.12);border-radius:999px;background:rgba(255,255,255,.04);font-size:10px}
   .workflow{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.flow-step{position:relative;padding:13px;border-radius:16px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.1)}.flow-step:not(:last-child)::after{content:'→';position:absolute;right:-9px;top:50%;transform:translateY(-50%);color:#a78dff;z-index:2}.flow-step b{font-size:11px}.flow-step span{display:block;color:rgba(255,255,255,.4);font-size:9px;margin-top:4px}
   .briefing{font-size:20px;line-height:1.25;letter-spacing:-.025em;max-width:800px}.briefing em{font-style:normal;color:#b9a5ff}.setting-row{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.08)}.setting-row:last-child{border-bottom:0}.setting-row b{font-size:11px}.setting-row span{display:block;color:rgba(255,255,255,.4);font-size:9px;margin-top:3px}.toggle{width:32px;height:18px;border-radius:99px;background:#7255ff;padding:3px;flex:0 0 auto}.toggle::after{content:'';display:block;width:12px;height:12px;border-radius:50%;background:white;margin-left:14px}.toggle.off{background:rgba(255,255,255,.14)}.toggle.off::after{margin-left:0}
-  .filter-strip{display:flex;gap:7px;margin-bottom:12px}.filter-pill{padding:6px 10px;border:1px solid rgba(255,255,255,.11);border-radius:999px;color:rgba(255,255,255,.5);font-size:9px}.filter-pill.active{background:rgba(116,88,255,.22);border-color:rgba(155,120,255,.42);color:white}.module-view-enter{animation:moduleIn .3s cubic-bezier(.22,1,.36,1) both}@keyframes moduleIn{from{opacity:0;transform:translateY(8px);filter:blur(3px)}to{opacity:1;transform:none;filter:none}}.nav-item:focus-visible{outline:2px solid #a992ff;outline-offset:4px}@media(prefers-reduced-motion:reduce){.module-view-enter{animation:none!important}.splash,.splash *{animation-duration:.01ms!important}}
+  .filter-strip{display:flex;gap:7px;margin-bottom:12px}.filter-pill{padding:6px 10px;border:1px solid rgba(255,255,255,.11);border-radius:999px;color:rgba(255,255,255,.5);font-size:9px}.filter-pill.active{background:rgba(116,88,255,.22);border-color:rgba(155,120,255,.42);color:white}.module-view-enter{animation:moduleIn .3s cubic-bezier(.22,1,.36,1) both}@keyframes moduleIn{from{opacity:0;transform:translateY(8px);filter:blur(3px)}to{opacity:1;transform:none;filter:none}}@media(prefers-reduced-motion:reduce){.module-view-enter{animation:none!important}.splash,.splash *{animation-duration:.01ms!important}}
 
 </style>
 </head>
@@ -770,6 +876,7 @@
   <nav class="sidebar">
     <div class="nav-logo"><img src="portal/adheraos-client/adhera-mark.png" alt="Adhera"></div>
     <div class="nav-divider"></div>
+    <span class="nav-glass-indicator is-instant" aria-hidden="true"></span>
     <div class="nav-item active" data-view="home" data-tip="Home" role="button" tabindex="0" aria-label="Abrir Home"><span class="nav-tooltip">Home</span><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
     <div class="nav-item" data-view="projects" data-tip="Projetos" role="button" tabindex="0" aria-label="Abrir Projetos"><span class="nav-tooltip">Projetos</span><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></div>
     <div class="nav-item" data-view="workspace" data-tip="Workspace" role="button" tabindex="0" aria-label="Abrir Workspace"><span class="nav-tooltip">Workspace</span><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
@@ -968,6 +1075,27 @@
   const dashboard = document.getElementById('dashboard');
   const homeMarkup = dashboard.innerHTML;
   const searchLabel = document.querySelector('.top-search span');
+  const sidebar = document.querySelector('.sidebar');
+  const navIndicator = document.querySelector('.nav-glass-indicator');
+
+  function updateGlassIndicator(item, instant = false) {
+    if (!item || !navIndicator) return;
+    navIndicator.classList.toggle('is-instant', instant);
+    navIndicator.classList.add('is-moving');
+    sidebar.style.setProperty('--nav-glass-y', item.offsetTop + 'px');
+    window.setTimeout(() => navIndicator.classList.remove('is-moving'), instant ? 0 : 600);
+    if (instant) requestAnimationFrame(() => navIndicator.classList.remove('is-instant'));
+  }
+
+  sidebar.addEventListener('pointermove', event => {
+    const bounds = sidebar.getBoundingClientRect();
+    sidebar.style.setProperty('--sidebar-glass-x', ((event.clientX - bounds.left) / bounds.width * 100) + '%');
+    sidebar.style.setProperty('--sidebar-glass-y', ((event.clientY - bounds.top) / bounds.height * 100) + '%');
+  });
+  sidebar.addEventListener('pointerleave', () => {
+    sidebar.style.setProperty('--sidebar-glass-x', '28%');
+    sidebar.style.setProperty('--sidebar-glass-y', '6%');
+  });
   let clientProfile = {
     contact_name: 'Kaua',
     company_name: 'Acme Corp.',
@@ -1035,11 +1163,15 @@
   const labels = {home:'Como posso ajudar sua operação?',projects:'Buscar projeto, responsável ou fase',workspace:'Buscar conversa, solicitação ou aprovação',vault:'Buscar documento, contrato ou relatório',intelligence:'Pergunte à Intelligence sobre a operação',analytics:'Explorar indicadores e resultados',integrations:'Buscar sistema ou conexão',automations:'Buscar fluxo, agente ou execução',settings:'Buscar configuração'};
   function openView(name, updateHash = true) {
     const next = views[name];
+    let activeItem = null;
     document.querySelectorAll('.nav-item').forEach(item => {
       const isActive = item.dataset.view === name;
       item.classList.toggle('active', isActive);
       item.setAttribute('aria-current', isActive ? 'page' : 'false');
+      if (isActive) activeItem = item;
     });
+    updateGlassIndicator(activeItem, !navIndicator.dataset.ready);
+    navIndicator.dataset.ready = 'true';
     dashboard.classList.toggle('module-view', name !== 'home');
     dashboard.innerHTML = name === 'home' ? homeMarkup : `<div class="module-shell module-view-enter">${next()}</div>`;
     dashboard.scrollTop = 0;
