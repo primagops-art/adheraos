@@ -162,21 +162,6 @@
     outline: 1px solid transparent;
     outline-offset: -1px;
   }
-  .top-greeting::before,
-  .top-search::before,
-  .top-date::before,
-  .top-toggle::before,
-  .top-notif::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    border-radius: inherit;
-    pointer-events: none;
-    background: radial-gradient(100px circle at var(--glass-x, 24%) var(--glass-y, 16%), rgba(255,255,255,0.27), transparent 68%);
-    opacity: 0.72;
-    transition: opacity 220ms ease;
-  }
   .top-greeting > *,
   .top-search > *,
   .top-date > *,
@@ -218,17 +203,6 @@
       0 0 38px rgba(70,90,255,0.12);
     outline: 1px solid transparent;
     outline-offset: -1px;
-  }
-  .sidebar::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    border-radius: inherit;
-    pointer-events: none;
-    background: radial-gradient(110px circle at var(--sidebar-glass-x, 28%) var(--sidebar-glass-y, 6%), rgba(255,255,255,0.26), transparent 68%);
-    opacity: 0.72;
-    transition: opacity 220ms ease;
   }
   .sidebar > *:not(.nav-glass-indicator) { position: relative; z-index: 2; }
   .nav-glass-indicator {
@@ -375,18 +349,6 @@
     outline: 1px solid transparent;
     outline-offset: -1px;
   }
-  .dashboard::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    border-radius: inherit;
-    pointer-events: none;
-    background: radial-gradient(420px circle at var(--glass-x, 18%) var(--glass-y, 8%), rgba(255,255,255,0.15), transparent 66%);
-    opacity: 0.64;
-    transition: opacity 220ms ease;
-  }
-
   /* ── Card Base ── */
   .card {
     isolation: isolate;
@@ -404,17 +366,6 @@
       0 18px 50px rgba(0,0,0,0.30),
       inset 0 0 50px rgba(100,120,255,0.07);
   }
-  .card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    border-radius: inherit;
-    pointer-events: none;
-    background: radial-gradient(180px circle at var(--glass-x, 18%) var(--glass-y, 8%), rgba(255,255,255,0.13), transparent 70%);
-    opacity: 0.55;
-    transition: opacity 220ms ease;
-  }
   .dashboard > *,
   .card > *,
   .metric-card > *,
@@ -424,11 +375,8 @@
     transform: translateY(-4px);
     box-shadow: 
       var(--glass-rim-shadow),
-      0 22px 54px rgba(0,0,0,0.42),
-      inset 0 0 60px rgba(100,120,255,0.10),
-      0 0 30px rgba(90,100,255,0.14);
+      0 22px 54px rgba(0,0,0,0.42);
   }
-  .card:hover::before { opacity: 0.9; }
   .card-title {
     font-size: 16px; font-weight: 600; color: rgba(255,255,255,0.94);
     display: flex; align-items: center; gap: 8px;
@@ -951,16 +899,6 @@
     transform: translateY(14px) scale(.985);
     transition: opacity .55s ease .18s, transform .55s cubic-bezier(.22,1,.36,1) .18s;
   }
-  .briefing-context::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    border-radius: inherit;
-    pointer-events: none;
-    background: radial-gradient(320px circle at var(--glass-x, 18%) var(--glass-y, 10%), rgba(255,255,255,.18), transparent 68%);
-    opacity: .68;
-  }
   .briefing-context > * { position: relative; z-index: 1; }
   .splash.is-context .briefing-context { opacity: 1; transform: none; }
   .briefing-brand { display:flex; align-items:center; gap:12px; margin-bottom:42px; }
@@ -1018,9 +956,7 @@
   .live-dot { width:7px; height:7px; border-radius:50%; background:var(--neon-green); box-shadow:0 0 14px rgba(var(--neon-green-rgb),.82); }
   .metric-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin-bottom:14px; }
   .metric-card,.module-card { position:relative; isolation:isolate; overflow:hidden; background:linear-gradient(145deg,rgba(255,255,255,.07),rgba(8,13,28,.58)); border:1px solid rgba(255,255,255,.13); box-shadow:var(--glass-rim-shadow),0 16px 34px rgba(0,0,0,.16); backdrop-filter:none; -webkit-backdrop-filter:none; border-radius:22px; transition:border-color .2s ease,transform 600ms var(--glass-spring),box-shadow .2s ease; }
-  .metric-card::before,.module-card::before { content:''; position:absolute; inset:0; z-index:0; border-radius:inherit; pointer-events:none; background:radial-gradient(170px circle at var(--glass-x,18%) var(--glass-y,8%),rgba(255,255,255,.12),transparent 70%); opacity:.52; transition:opacity .2s ease; }
-  .metric-card:hover,.module-card:hover { border-color:rgba(255,255,255,.21); box-shadow:var(--glass-rim-shadow),0 20px 40px rgba(0,0,0,.24),0 0 26px rgba(90,100,255,.08); }
-  .metric-card:hover::before,.module-card:hover::before { opacity:.9; }
+  .metric-card:hover,.module-card:hover { border-color:rgba(255,255,255,.21); box-shadow:var(--glass-rim-shadow),0 20px 40px rgba(0,0,0,.24); }
   .metric-card { padding:16px 17px; min-height:88px; }.metric-value{font-size:25px;font-weight:700;letter-spacing:-.035em}.metric-label{margin-top:7px;color:rgba(255,255,255,.48);font-size:10px;text-transform:uppercase;letter-spacing:.11em}.metric-note{margin-top:5px;color:var(--neon-green);font-size:10px;text-shadow:0 0 10px rgba(var(--neon-green-rgb),.22)}
   .module-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:12px}.module-card{padding:17px 18px;min-width:0}.span-12{grid-column:span 12}.span-8{grid-column:span 8}.span-7{grid-column:span 7}.span-6{grid-column:span 6}.span-5{grid-column:span 5}.span-4{grid-column:span 4}
   .module-card h2{margin:0 0 13px;font-size:13px;letter-spacing:-.01em}.card-kicker{color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.12em;font-size:9px;margin-bottom:7px}
@@ -1460,46 +1396,6 @@
     window.setTimeout(() => navIndicator.classList.remove('is-moving'), instant ? 0 : 600);
     if (instant) requestAnimationFrame(() => navIndicator.classList.remove('is-instant'));
   }
-
-  sidebar.addEventListener('pointermove', event => {
-    const bounds = sidebar.getBoundingClientRect();
-    sidebar.style.setProperty('--sidebar-glass-x', ((event.clientX - bounds.left) / bounds.width * 100) + '%');
-    sidebar.style.setProperty('--sidebar-glass-y', ((event.clientY - bounds.top) / bounds.height * 100) + '%');
-  });
-  sidebar.addEventListener('pointerleave', () => {
-    sidebar.style.setProperty('--sidebar-glass-x', '28%');
-    sidebar.style.setProperty('--sidebar-glass-y', '6%');
-  });
-
-  const reactiveGlassSelector = [
-    '.top-greeting',
-    '.top-search',
-    '.top-date',
-    '.top-toggle',
-    '.top-notif',
-    '.dashboard',
-    '.card',
-    '.metric-card',
-    '.module-card',
-    '.briefing-context'
-  ].join(',');
-
-  document.addEventListener('pointermove', event => {
-    if (!(event.target instanceof Element)) return;
-    const surface = event.target.closest(reactiveGlassSelector);
-    if (!surface) return;
-    const bounds = surface.getBoundingClientRect();
-    surface.style.setProperty('--glass-x', ((event.clientX - bounds.left) / bounds.width * 100) + '%');
-    surface.style.setProperty('--glass-y', ((event.clientY - bounds.top) / bounds.height * 100) + '%');
-  });
-
-  document.addEventListener('pointerout', event => {
-    if (!(event.target instanceof Element)) return;
-    const surface = event.target.closest(reactiveGlassSelector);
-    if (!surface || (event.relatedTarget instanceof Node && surface.contains(event.relatedTarget))) return;
-    surface.style.removeProperty('--glass-x');
-    surface.style.removeProperty('--glass-y');
-  });
 
   let clientProfile = {
     contact_name: 'Kaua',
