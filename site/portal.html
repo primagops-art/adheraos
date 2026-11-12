@@ -946,8 +946,42 @@
   }
 
   /* Complete portal views — recovered from the last full operational build. */
-  .dashboard.module-view { display:block; overflow-y:auto; overflow-x:hidden; padding:24px 28px 32px; scrollbar-width:thin; scrollbar-color:rgba(147,119,255,.55) transparent; }
+  .dashboard.module-view {
+    display: block;
+    overflow: hidden;
+    padding: 24px 28px 32px;
+  }
   .module-shell { min-height:100%; color:rgba(255,255,255,.96); }
+  .dashboard.module-view .module-shell {
+    height: 100%;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding-right: 14px;
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(157,132,255,.66) transparent;
+  }
+  .dashboard.module-view .module-shell::-webkit-scrollbar { width: 6px; }
+  .dashboard.module-view .module-shell::-webkit-scrollbar-track { background: transparent; }
+  .dashboard.module-view .module-shell::-webkit-scrollbar-thumb {
+    min-height: 44px;
+    border: 1px solid rgba(255,255,255,.18);
+    border-radius: 999px;
+    background: linear-gradient(180deg, rgba(181,163,255,.78), rgba(112,78,255,.64));
+    box-shadow: inset 1px 0 0 rgba(255,255,255,.28), 0 0 10px rgba(112,78,255,.18);
+  }
+  .dashboard.module-view .module-shell::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, rgba(195,181,255,.9), rgba(126,92,255,.76));
+  }
+  .dashboard.module-view .module-shell::-webkit-scrollbar-button,
+  .dashboard.module-view .module-shell::-webkit-scrollbar-corner {
+    display: none;
+    width: 0;
+    height: 0;
+    background: transparent;
+  }
   .module-head { display:flex; align-items:flex-end; justify-content:space-between; gap:24px; margin-bottom:18px; }
   .module-eyebrow { color:#a992ff; text-transform:uppercase; letter-spacing:.16em; font-size:10px; font-weight:700; margin-bottom:8px; }
   .module-head h1 { font-size:30px; line-height:1; letter-spacing:-.035em; margin:0; }
@@ -1115,6 +1149,7 @@
     .module-card::before { display: none; }
     .nav-glass-indicator { background: Highlight; box-shadow: none; forced-color-adjust: none; }
     .nav-item.active { color: HighlightText; forced-color-adjust: none; }
+    .dashboard.module-view .module-shell { scrollbar-color: CanvasText Canvas; }
   }
 
 </style>
